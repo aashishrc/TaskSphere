@@ -14,6 +14,7 @@ function Navigation() {
               <Nav.Link href="/projects">Projects</Nav.Link>
               <Nav.Link href="/tasks">Tasks</Nav.Link>
               <Nav.Link href="/profile">Profile</Nav.Link>
+              <Nav.Link href="/kanbanBoard">Kanban</Nav.Link>
             </Nav>
             <Nav className="ml-auto">
               <Nav.Link href="/logout">Logout</Nav.Link>

@@ -6,6 +6,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `npm i react-beautiful-dnd antd styled-components` to install three packages and their dependenciess
+
 ### `npm start`
 
 Runs the app in the development mode.\
