@@ -1,6 +1,6 @@
-package com.neu.tasksphere.model;
+package com.neu.tasksphere.model.payload.request;
 
-import com.neu.tasksphere.entity.Role;
+import com.neu.tasksphere.entity.enums.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 

@@ -1,4 +1,4 @@
-package com.neu.tasksphere.entity;
+package com.neu.tasksphere.entity.enums;
 
 public enum Role {
     Admin,

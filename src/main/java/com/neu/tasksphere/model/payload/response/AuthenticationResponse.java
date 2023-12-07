@@ -1,4 +1,4 @@
-package com.neu.tasksphere.model;
+package com.neu.tasksphere.model.payload.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

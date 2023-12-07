@@ -1,13 +1,14 @@
 package com.neu.tasksphere.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.neu.tasksphere.entity.enums.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(
@@ -19,30 +20,28 @@ import java.util.Objects;
                 )
         })
 public class User implements UserDetails {
-    @Id
-//    @SequenceGenerator(
-//            name = "user_id_seq",
-//            sequenceName = "user_id_seq",
-//            allocationSize = 1
-//    )
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-//            generator = "user_id_seq"
-    )
-    private Integer id;
-    @Column(
-            nullable = false
-    )
-    private String username;
-    @Column(
-            nullable = false
-    )
-    private String password;
-    private String firstname;
-    private String lastname;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column(nullable = false)
+    private String username;
+    @Column(nullable = false)
+    private String password;
+    @Column(nullable = false)
+    private String firstname;
+    @Column(nullable = false)
+    private String lastname;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "assignee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
 
     public User() {
     }
@@ -81,6 +80,14 @@ public class User implements UserDetails {
 
     public Role getRole() {
         return this.role;
+    }
+
+    public List<Task> getTasks() {
+        return tasks == null ? null : new ArrayList<>(tasks);
+    }
+
+    public List<Comment> getComments() {
+        return comments == null ? null : new ArrayList<>(comments);
     }
 
     public void setId(Integer id) {

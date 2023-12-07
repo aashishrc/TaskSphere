@@ -1,4 +1,4 @@
-package com.neu.tasksphere.jwt;
+package com.neu.tasksphere.config.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

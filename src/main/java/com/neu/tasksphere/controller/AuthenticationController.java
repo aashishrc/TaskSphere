@@ -1,8 +1,8 @@
 package com.neu.tasksphere.controller;
 
-import com.neu.tasksphere.model.AuthenticationRequest;
-import com.neu.tasksphere.model.AuthenticationResponse;
-import com.neu.tasksphere.model.RegisterRequest;
+import com.neu.tasksphere.model.payload.request.AuthenticationRequest;
+import com.neu.tasksphere.model.payload.response.AuthenticationResponse;
+import com.neu.tasksphere.model.payload.request.RegisterRequest;
 import com.neu.tasksphere.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,17 +16,17 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
-    public AuthenticationController(AuthenticationService service) {
-        this.authenticationService = service;
+    public AuthenticationController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(authenticationService.register(request));
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+        return authenticationService.register(request);
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(authenticationService.login(request));
+        return authenticationService.login(request);
     }
 }
