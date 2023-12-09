@@ -32,10 +32,4 @@ public class RestControllerExceptionHandler {
         ApiResponse apiResponse = exception.getApiResponse();
         return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
     }
-
-    @ExceptionHandler(ResponseEntityErrorException.class)
-    @ResponseBody
-    public ResponseEntity<ApiResponse> resolveException(ResponseEntityErrorException exception) {
-        return exception.getApiResponse();
-    }
 }

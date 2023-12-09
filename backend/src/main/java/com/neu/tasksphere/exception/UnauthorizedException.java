@@ -11,22 +11,14 @@ public class UnauthorizedException extends RuntimeException {
 
     private String message;
 
-    public UnauthorizedException(ApiResponse apiResponse) {
-        super();
-        this.apiResponse = apiResponse;
-    }
-
     public UnauthorizedException(String message) {
         super(message);
         this.message = message;
+        this.setApiResponse();
     }
 
     public UnauthorizedException(String message, Throwable cause) {
         super(message, cause);
-    }
-
-    public ApiResponse getApiResponse() {
-        return apiResponse;
     }
 
     public void setApiResponse(ApiResponse apiResponse) {
@@ -39,5 +31,13 @@ public class UnauthorizedException extends RuntimeException {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public ApiResponse getApiResponse() {
+        return apiResponse;
+    }
+
+    private void setApiResponse() {
+        apiResponse = new ApiResponse(Boolean.FALSE, message);
     }
 }
