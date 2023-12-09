@@ -1,6 +1,7 @@
 package com.neu.tasksphere.controller;
 
 import com.neu.tasksphere.model.ProjectDTO;
+import com.neu.tasksphere.model.UserDTO;
 import com.neu.tasksphere.model.payload.request.ProjectRequest;
 import com.neu.tasksphere.model.payload.response.ApiResponse;
 import com.neu.tasksphere.model.payload.response.PagedResponse;
@@ -9,6 +10,8 @@ import com.neu.tasksphere.service.UserProjectService;
 import com.neu.tasksphere.service.UserProjectServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/projects")
@@ -54,5 +57,10 @@ public class ProjectController {
     @PostMapping("/assign")
     public ResponseEntity<ApiResponse> assignProject(@RequestBody ProjectRequest request) {
         return userProjectService.assignProject(request);
+    }
+
+    @GetMapping("/{id}/users")
+    public ResponseEntity<List<UserDTO>> getAllUsersByProject(@PathVariable("id") Integer id) {
+        return userProjectService.getAllUsersByProject(id);
     }
 }

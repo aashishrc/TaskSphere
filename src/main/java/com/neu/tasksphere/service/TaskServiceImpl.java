@@ -62,10 +62,10 @@ public class TaskServiceImpl implements TaskService {
 
         Stream<Task> taskStream = tasks.stream();
         if (status != null) {
-            taskStream = taskStream.filter(task -> task.getStatus() == status);
+            taskStream = taskStream.filter(task -> task.getStatus().equals(status));
         }
         if (priority != null) {
-            taskStream = taskStream.filter(task -> task.getPriority() == priority);
+            taskStream = taskStream.filter(task -> task.getPriority().equals(priority));
         }
 
         List<TaskDTO> taskDTOList = taskStream

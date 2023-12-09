@@ -4,6 +4,7 @@ import com.neu.tasksphere.entity.Project;
 import com.neu.tasksphere.entity.User;
 import com.neu.tasksphere.entity.UserProject;
 import com.neu.tasksphere.exception.ResourceNotFoundException;
+import com.neu.tasksphere.model.UserDTO;
 import com.neu.tasksphere.model.payload.request.ProjectRequest;
 import com.neu.tasksphere.model.payload.response.ApiResponse;
 import com.neu.tasksphere.repository.ProjectRepository;
@@ -11,6 +12,8 @@ import com.neu.tasksphere.repository.UserProjectRepository;
 import com.neu.tasksphere.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserProjectServiceImpl implements UserProjectService {
@@ -39,5 +42,23 @@ public class UserProjectServiceImpl implements UserProjectService {
         userProjectRepository.save(userProject);
 
         return ResponseEntity.ok(new ApiResponse(Boolean.TRUE, "Project assigned to user successfully"));
+    }
+
+    public ResponseEntity<List<UserDTO>> getAllUsersByProject(Integer projectId) {
+
+        List<UserProject> usersOfProject = userProjectRepository.findByProjectId(projectId);
+
+        List<UserDTO> userDTOList = usersOfProject.stream()
+                .map((userProject) -> {
+                    User user = userProject.getUser();
+                    UserDTO userDTO = new UserDTO();
+                    userDTO.setUsername(user.getUsername());
+                    userDTO.setFirstname(user.getFirstname());
+                    userDTO.setLastname(user.getLastname());
+                    return userDTO;
+                })
+                .toList();
+
+        return ResponseEntity.ok(userDTOList);
     }
 }
