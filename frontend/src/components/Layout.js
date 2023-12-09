@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 const Layout = () => {
   return (
     <>
-      <Navbar bg="dark" data-bs-theme="dark">
+      <Navbar bg="black" data-bs-theme="dark">
         <Container fluid>
           <Navbar.Brand href="/">TrackSphere</Navbar.Brand>
 
