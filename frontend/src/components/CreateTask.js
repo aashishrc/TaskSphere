@@ -1,18 +1,12 @@
 import React, { useState } from 'react'
 import '../styles/css/CreateTask.css'
 import Form from 'react-bootstrap/Form';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Button } from 'react-bootstrap';
-// import { Flex } from 'antd';
 
 const NewTask = () =>{
-    const [selectedDate, setSelectedDate] = useState(new Date());
     const [date, setDate] = useState();
 
-    const handleDateChange = (date) => {
-      setSelectedDate(date);
-    };
     return(
         <div className='formBackground'>
             <Form>
@@ -34,7 +28,7 @@ const NewTask = () =>{
                     <Form.Label>Select Dealdine</Form.Label>
                     <input type='date' onChange={e => setDate(e.target.value)}></input>
                 </div>
-                 {/* error with useState*/}
+                 
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Assignee</Form.Label>
                     <Form.Select aria-label="Default select example">
