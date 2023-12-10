@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import '../styles/css/CreateTask.css'
 import Form from 'react-bootstrap/Form';
-import DatePicker from 'react-datepicker';
+// import DatePicker from 'react-datepicker';
 // import 'react-datepicker/dist/react-datepicker.css';
 import { Button } from 'react-bootstrap';
-import { Flex } from 'antd';
+// import { Flex } from 'antd';
 
 const NewTask = () =>{
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -30,12 +30,12 @@ const NewTask = () =>{
                 </Form.Group>
 
                 <div>
-                <h1>Date Picker Example</h1>
+                {/* <h1>Date Picker Example</h1>
                 <DatePicker
                     selected={selectedDate}
                     onChange={handleDateChange}
                     dateFormat="MM/dd/yyyy"
-                />
+                /> */}
             </div> {/* error with useState*/}
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Assignee</Form.Label>

@@ -1,12 +1,6 @@
-.vertical-navbar {
-  padding: 1rem;
-  margin: 0%;
-  background-color: black;
-  width: 20vw;
-  height: 100vh;
+.main {
+  display: flex;
 }
-.vertical-navbar .profile-container {
-  background-color: white;
-  height: 5rem;
-  border-radius: 1rem;
+.main .main-content {
+  flex: 1;
 }/*# sourceMappingURL=Home.css.map */
