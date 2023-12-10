@@ -1,32 +1,25 @@
-import React from "react";
-import TaskList from "./TaskList";
+import { React } from "react";
+import LeftNavigation from "./LeftNavigation";
 import "../styles/css/Home.css";
 import { Button, Container, Nav } from "react-bootstrap";
+import { useState } from "react";
 
 const Home = () => {
+  const [displayActivityLog, setDisplayActivityLog] = useState(null);
+
+  const handleActivityButtonClick = (activityLog) => {
+    setDisplayActivityLog((prevComponent) =>
+      prevComponent === activityLog ? null : activityLog
+    );
+  };
+
   return (
     <>
-      <div>
-        {/* <Container fluid className="main-content"> */}
-        <Nav className="flex-column vertical-navbar">
-          <br />
-          {/* <Nav.Link href="#vertical"> */}
-          <Container className="profile-container">
-            Profile Name: , Role:
-          </Container>
-          {/* </Nav.Link> */}
-          <hr />
-          <TaskList />
-          <hr />
-          <Button>View All tasks</Button>
-          <hr />
-          <Button>Create New Task</Button>
-          <hr />
-          <Button>Create New Project</Button>
-          <hr />
-          <Button>View Activity Log</Button>
-        </Nav>
-        {/* </Container> */}
+      <div className="main">
+        <div className="verticalNavbar">
+          <LeftNavigation onClickActivityButton={handleActivityButtonClick} />
+        </div>
+        <div className="main-content"></div>
       </div>
     </>
   );
