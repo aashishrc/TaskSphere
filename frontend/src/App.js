@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import Column from "./components/Column";
 import KanbanBoard from "./components/KanbanBoard";
 import Task from "./components/Task";
+import CreateTask from "./components/CreateTask"
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignUp />} />
             <Route path="kanbanBoard" element={<KanbanBoard />} />
+            <Route path="newTask" element={<CreateTask/>} />
           </Route>
         </Routes>
       </BrowserRouter>
