@@ -3,6 +3,7 @@ package com.neu.tasksphere.service;
 import com.neu.tasksphere.entity.Project;
 import com.neu.tasksphere.entity.User;
 import com.neu.tasksphere.entity.UserProject;
+import com.neu.tasksphere.entity.factory.UserProjectFactory;
 import com.neu.tasksphere.exception.ResourceNotFoundException;
 import com.neu.tasksphere.model.UserDTO;
 import com.neu.tasksphere.model.payload.request.ProjectRequest;
@@ -38,7 +39,8 @@ public class UserProjectServiceImpl implements UserProjectService {
         User user = userRepository.findById(request.getAssigneeId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "ID", request.getAssigneeId()));
 
-        UserProject userProject = new UserProject(user, project);
+        UserProjectFactory userProjectFactory = UserProjectFactory.getInstance();
+        UserProject userProject = userProjectFactory.getUserProjectFactory(user, project);
         userProjectRepository.save(userProject);
 
         return ResponseEntity.ok(new ApiResponse(Boolean.TRUE, "Project assigned to user successfully"));
