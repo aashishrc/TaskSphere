@@ -14,6 +14,17 @@
 }
 .formBackground div.Buttons {
   display: flex;
+  margin: 3rem auto;
   justify-content: space-between;
-  width: 50%;
+  width: 40%;
+}
+.formBackground div.DatePicker {
+  display: flex;
+  width: 40%;
+  justify-content: space-between;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.formBackground .form-label {
+  font-weight: 500;
 }/*# sourceMappingURL=CreateTask.css.map */

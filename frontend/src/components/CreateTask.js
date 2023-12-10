@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import '../styles/css/CreateTask.css'
 import Form from 'react-bootstrap/Form';
-// import DatePicker from 'react-datepicker';
-// import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { Button } from 'react-bootstrap';
 // import { Flex } from 'antd';
 
 const NewTask = () =>{
     const [selectedDate, setSelectedDate] = useState(new Date());
+    const [date, setDate] = useState();
 
     const handleDateChange = (date) => {
       setSelectedDate(date);
@@ -29,14 +30,11 @@ const NewTask = () =>{
                     <Form.Control type='text'/>
                 </Form.Group>
 
-                <div>
-                {/* <h1>Date Picker Example</h1>
-                <DatePicker
-                    selected={selectedDate}
-                    onChange={handleDateChange}
-                    dateFormat="MM/dd/yyyy"
-                /> */}
-            </div> {/* error with useState*/}
+                <div className='DatePicker'>
+                    <Form.Label>Select Dealdine</Form.Label>
+                    <input type='date' onChange={e => setDate(e.target.value)}></input>
+                </div>
+                 {/* error with useState*/}
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Assignee</Form.Label>
                     <Form.Select aria-label="Default select example">
@@ -49,8 +47,8 @@ const NewTask = () =>{
             
             </Form>
             <div className='Buttons'>
-                <Button variant='primary'>Assign</Button>
-                <Button variant='danger'>Cancel</Button>
+                <Button variant='primary btn-lg'>Assign</Button>
+                <Button variant='danger btn-lg'>Cancel</Button>
             </div>
             
 
