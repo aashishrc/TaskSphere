@@ -3,6 +3,7 @@ package com.neu.tasksphere.service;
 import com.neu.tasksphere.entity.User;
 import com.neu.tasksphere.exception.ResourceNotFoundException;
 import com.neu.tasksphere.model.UserDTO;
+import com.neu.tasksphere.model.factory.UserDtoFactory;
 import com.neu.tasksphere.model.payload.request.UserRequest;
 import com.neu.tasksphere.model.payload.response.ApiResponse;
 import com.neu.tasksphere.repository.UserRepository;
@@ -21,13 +22,12 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "ID", id));
 
-        UserDTO userDTO = new UserDTO(
-                user.getId(),
+        UserDtoFactory userDtoFactory = UserDtoFactory.getInstance();
+        UserDTO userDTO = userDtoFactory.createUserDTO(user.getId(),
                 user.getUsername(),
                 user.getFirstname(),
                 user.getLastname(),
-                user.getRole()
-        );
+                user.getRole());
 
         return ResponseEntity.ok(userDTO);
     }

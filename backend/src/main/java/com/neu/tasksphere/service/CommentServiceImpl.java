@@ -7,6 +7,7 @@ import com.neu.tasksphere.entity.factory.CommentFactory;
 import com.neu.tasksphere.exception.ResourceNotFoundException;
 import com.neu.tasksphere.model.CommentDTO;
 import com.neu.tasksphere.model.UserDTO;
+import com.neu.tasksphere.model.factory.CommentDtoFactory;
 import com.neu.tasksphere.model.payload.request.CommentRequest;
 import com.neu.tasksphere.model.payload.response.ApiResponse;
 import com.neu.tasksphere.model.payload.response.PagedResponse;
@@ -95,10 +96,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     private CommentDTO mapToCommentDTO(Comment comment) {
-        CommentDTO commentDTO = new CommentDTO(
-                comment.getId(),
+
+        CommentDtoFactory commentDtoFactory = CommentDtoFactory.getInstance();
+        CommentDTO commentDTO = commentDtoFactory.createCommentDto(comment.getId(),
                 comment.getComment(),
                 comment.getCreatedAt()
+
         );
 
         UserDTO userDTO = new UserDTO();

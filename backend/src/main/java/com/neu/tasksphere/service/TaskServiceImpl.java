@@ -9,6 +9,7 @@ import com.neu.tasksphere.exception.ResourceNotFoundException;
 import com.neu.tasksphere.model.CommentDTO;
 import com.neu.tasksphere.model.TaskDTO;
 import com.neu.tasksphere.model.UserDTO;
+import com.neu.tasksphere.model.factory.TaskDtoFactory;
 import com.neu.tasksphere.model.payload.request.TaskRequest;
 import com.neu.tasksphere.model.payload.response.ApiResponse;
 import com.neu.tasksphere.model.payload.response.PagedResponse;
@@ -84,6 +85,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public ResponseEntity<TaskDTO> createTask(TaskRequest request) {
+
+
         Task task = new Task(
                 request.getName(),
                 request.getDescription(),
@@ -169,7 +172,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     private TaskDTO mapToTaskDTO(Task task) {
-        TaskDTO taskDTO = new TaskDTO(
+
+        TaskDtoFactory taskDtoFactory = TaskDtoFactory.getInstance();
+        TaskDTO taskDTO = taskDtoFactory.createTaskDto(
                 task.getId(),
                 task.getName(),
                 task.getDescription(),
@@ -177,6 +182,7 @@ public class TaskServiceImpl implements TaskService {
                 task.getPriority(),
                 task.getStatus()
         );
+
 
         if (task.getAssignee() != null) {
             UserDTO userDTO = new UserDTO();

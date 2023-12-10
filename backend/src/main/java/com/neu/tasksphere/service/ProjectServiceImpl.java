@@ -4,6 +4,7 @@ import com.neu.tasksphere.entity.Project;
 import com.neu.tasksphere.entity.factory.ProjectFactory;
 import com.neu.tasksphere.exception.ResourceNotFoundException;
 import com.neu.tasksphere.model.ProjectDTO;
+import com.neu.tasksphere.model.factory.ProjectDtoFactory;
 import com.neu.tasksphere.model.payload.request.ProjectRequest;
 import com.neu.tasksphere.model.payload.response.ApiResponse;
 import com.neu.tasksphere.model.payload.response.PagedResponse;
@@ -30,7 +31,8 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Project", "ID", id));
 
-        ProjectDTO projectDTO = new ProjectDTO(project.getId(), project.getName(), project.getDescription());
+        ProjectDtoFactory projectDtoFactory = ProjectDtoFactory.getInstance();
+        ProjectDTO projectDTO = projectDtoFactory.createProjectDto(project.getId(), project.getName(), project.getDescription());
 
         return ResponseEntity.ok(projectDTO);
     }
