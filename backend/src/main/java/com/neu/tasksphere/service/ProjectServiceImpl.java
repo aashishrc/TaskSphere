@@ -1,6 +1,7 @@
 package com.neu.tasksphere.service;
 
 import com.neu.tasksphere.entity.Project;
+import com.neu.tasksphere.entity.factory.ProjectFactory;
 import com.neu.tasksphere.exception.ResourceNotFoundException;
 import com.neu.tasksphere.model.ProjectDTO;
 import com.neu.tasksphere.model.payload.request.ProjectRequest;
@@ -65,7 +66,9 @@ public class ProjectServiceImpl implements ProjectService {
 //            Category updatedCategory = categoryRepository.save(category);
 //            return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
 //        }
-        Project project = new Project(request.getName(), request.getDescription());
+
+        ProjectFactory projectFactory = ProjectFactory.getInstance();
+        Project project = projectFactory.getProject(request.getName(), request.getDescription());
 
         projectRepository.save(project);
 
