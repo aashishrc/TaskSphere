@@ -3,7 +3,7 @@ import "../styles/css/LeftNavbar.css";
 import { Nav, Container, Button } from "react-bootstrap";
 import TaskList from "./TaskList";
 
-const LeftNavigation = ({ onClickActivityButton }) => {
+const LeftNavigation = ({ onButtonClick}) => {
   return (
     <>
       <Nav className="flex-column vertical-navbar">
@@ -18,11 +18,11 @@ const LeftNavigation = ({ onClickActivityButton }) => {
         <hr />
         <Button>View All tasks</Button>
         <hr />
-        <Button>Create New Task</Button>
+        <Button onClick={() => onButtonClick("CreateTask")}>Create New Task</Button>
         <hr />
         <Button>Create New Project</Button>
         <hr />
-        <Button onClick={() => onClickActivityButton("ActivityLog")}>
+        <Button onClick={() => onButtonClick("ActivityLog")}>
           View Activity Log
         </Button>
       </Nav>
