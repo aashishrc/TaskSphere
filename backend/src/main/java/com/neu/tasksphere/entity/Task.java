@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "tasks")
-public class Task implements Comparator<Task> {
+public class Task implements Comparable<Task> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -148,7 +148,7 @@ public class Task implements Comparator<Task> {
     }
 
     @Override
-    public int compare(Task o1, Task o2) {
-        return Integer.compare(o1.getPriority().getPriority(), o2.getPriority().getPriority());
+    public int compareTo(Task o) {
+        return Integer.compare(this.getPriority().getPriority(), o.getPriority().getPriority());
     }
 }
