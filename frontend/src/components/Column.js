@@ -23,14 +23,13 @@ const Title = styled.h3`
 
 const TaskList = styled.div`
   padding: 3px;
-  transistion: background-color 0.2s ease;
-  background-color: #f4f5f7;
+  transition: background-color 0.2s ease;
+  background-color: ${(props) => (props.isDraggingOver ? 'lightblue' : '#f4f5f7')};
   flex-grow: 1;
   min-height: 100px;
 `;
 
 export default function Column({ title, tasks, id }) {
-  // Ensure that tasks is an array, defaulting to an empty array if undefined
   const columnTasks = tasks || [];
 
   return (
@@ -51,9 +50,17 @@ export default function Column({ title, tasks, id }) {
             {...provided.droppableProps}
             isDraggingOver={snapshot.isDraggingOver}
           >
+            
             {columnTasks.map((task, index) => (
-              <Task key={task.id} index={index} task={task} />
+              <Task
+                key={task.id}  // Use task ID as the key
+                index={index}
+                task={task}
+                isDraggable={true}
+                isDone={false}
+              />
             ))}
+
             {provided.placeholder}
           </TaskList>
         )}

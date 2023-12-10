@@ -1,70 +1,101 @@
 import React, { useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import Column from "./Column";
+import "../styles/css/KanbanBoard.css";
 
 export default function KanbanBoard() {
+  // Initial data for tasks in different states
+  const initialNotStartedTasks = [
+    { id: 1, title: "Task 1", status: "notStarted" },
+    { id: 2, title: "Task 2", status: "notStarted" },
+    // ... add more not started tasks
+  ];
+
+  const initialInProgressTasks = [
+    { id: 3, title: "Task 3", status: "inProgress" },
+    { id: 4, title: "Task 4", status: "inProgress" },
+    // ... add more in progress tasks
+  ];
+
   const initialCompletedTasks = [
-    { id: 1, title: "Task 1", completed: true },
-    { id: 2, title: "Task 2", completed: true },
+    { id: 5, title: "Task 5", status: "completed" },
+    { id: 6, title: "Task 6", status: "completed" },
     // ... add more completed tasks
   ];
 
-  const initialIncompleteTasks = [
-    { id: 3, title: "Task 3", completed: false },
-    { id: 4, title: "Task 4", completed: false },
-    // ... add more incomplete tasks
-  ];
+  // State variables to manage tasks and new task title
+  const [notStarted, setNotStarted] = useState(initialNotStartedTasks || []);
+  const [inProgress, setInProgress] = useState(initialInProgressTasks || []);
+  const [completed, setCompleted] = useState(initialCompletedTasks || []);
+  const [newTaskTitle, setNewTaskTitle] = useState("");
 
-  // Initialize state with your own data
-  const [completed, setCompleted] = useState(initialCompletedTasks);
-  const [incomplete, setIncomplete] = useState(initialIncompleteTasks);
-  const [newTaskTitle, setNewTaskTitle] = useState(""); // Define newTaskTitle state
+  // Function to handle the end of a drag operation
+  // Function to handle the end of a drag operation
+// Function to handle the end of a drag operation
+// Function to handle the end of a drag operation
+const handleDragEnd = (result) => {
+  console.log("result:", result);
 
-  const handleDragEnd = (result) => {
-    if (!result.destination) {
-      // Destination is null or undefined, handle accordingly
-      return;
-    }
-    const { destination, source, draggableId } = result;
-
-    if (source.droppableId == destination.droppableId) return;
-
-    //REMOVE FROM SOURCE ARRAY
-    if (source.droppableId == 2) {
-      setCompleted(removeItemById(draggableId, completed));
-    } else {
-      setIncomplete(removeItemById(draggableId, incomplete));
-    }
-
-    // GET ITEM
-    const task = findItemById(draggableId, [...incomplete, ...completed]);
-
-    //ADD ITEM
-    if (destination.droppableId == 2) {
-      setCompleted([{ ...task, completed: !task.completed }, ...completed]);
-    } else {
-      setIncomplete([{ ...task, completed: !task.completed }, ...incomplete]);
-    }
-  };
-
-  function findItemById(id, array) {
-    return array.find((item) => item.id == id);
+  if (!result.destination) {
+    console.log("No destination");
+    return;
   }
 
-  function removeItemById(id, array) {
-    return array.filter((item) => item.id != id);
+  const { destination, source, draggableId } = result;
+  console.log("source:", source);
+  console.log("destination:", destination);
+
+  // If the source and destination columns are the same, do nothing
+  if (source.droppableId === destination.droppableId) {
+    console.log("Same column, do nothing");
+    return;
   }
 
+  // Find the task based on the dragged ID
+  const task = findItemById(draggableId, [...notStarted, ...inProgress, ...completed]);
+  console.log("task:", task);
+
+  if (!task) {
+    console.log("Task not found");
+    return;
+  }
+
+  // Separate tasks based on their status
+  const updatedNotStarted = notStarted.filter((t) => t.id !== task.id);
+  const updatedInProgress = inProgress.filter((t) => t.id !== task.id);
+  const updatedCompleted = completed.filter((t) => t.id !== task.id);
+
+  // Logic for moving tasks between columns
+  if (destination.droppableId === "2" && task.status === "notStarted") {
+    // Move the task to "In Progress"
+    console.log("Moving to In Progress");
+    setNotStarted(updatedNotStarted);
+    setInProgress((prevInProgress) => [...prevInProgress, { ...task, status: "inProgress" }]);
+  } else if (destination.droppableId === "3" && task.status === "inProgress") {
+    // Move the task to "Done"
+    console.log("Moving to Done");
+    setInProgress(updatedInProgress);
+    setCompleted((prevCompleted) => [...prevCompleted, { ...task, status: "completed" }]);
+  }
+};
+
+
+
+
+  // Function to find an item by its ID in an array
+  const findItemById = (id, array) => array.find((item) => item && item.id.toString() === id.toString());
+
+  // Function to handle the creation of a new task
   const handleCreateTask = () => {
     // Implement logic to create a new task
     const newTask = {
       id: Date.now(), // Generate a unique ID (you can use a library for better uniqueness)
       title: newTaskTitle,
-      completed: false,
+      status: "notStarted",
     };
 
-    // Update the state to include the new task in the "TO DO" column
-    setIncomplete([...incomplete, newTask]);
+    // Update the state to include the new task in the "To Do" column
+    setNotStarted([...notStarted, newTask]);
 
     // Clear the new task title input
     setNewTaskTitle("");
@@ -72,27 +103,14 @@ export default function KanbanBoard() {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <h2 style={{ textAlign: "center" }}>PROGRESS BOARD</h2>
-      <div style={{ marginBottom: "20px" }}>
-        <input
-          type="text"
-          placeholder="Enter new task"
-          value={newTaskTitle}
-          onChange={(e) => setNewTaskTitle(e.target.value)}
-        />
-        <button onClick={handleCreateTask}>Create Task</button>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexDirection: "row",
-        }}
-      >
-        <Column title={"TO DO"} tasks={incomplete} id={"1"} />
-        <Column title={"DONE"} tasks={completed} id={"2"} />
-        <Column title={"BACKLOG"} tasks={[]} id={"3"} />
+      <div className="kanban-container">
+        <h2 className="board-title"></h2>
+        <div className="columns-container">
+          {/* Render columns for "To Do", "In Progress", and "Done" */}
+          <Column title={"To Do"} tasks={notStarted} id={"1"} />
+          <Column title={"In Progress"} tasks={inProgress} id={"2"} />
+          <Column title={"Done"} tasks={completed} id={"3"} />
+        </div>
       </div>
     </DragDropContext>
   );

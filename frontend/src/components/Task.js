@@ -29,25 +29,25 @@ const Icons = styled.div`
 function bgcolorChange(props) {
   return props.isDragging
     ? "lightgreen"
-    : props.isDraggable
-    ? props.isBacklog
-      ? "#F2D7D5"
-      : "#DCDCDC"
-    : props.isBacklog
+    : props.isDone
     ? "#F2D7D5"
+    : props.isDraggable
+    ? "#DCDCDC"
     : "#EAF4FC";
 }
+
 
 export default function Task({ task, index }) {
   return (
     <Draggable draggableId={`${task.id}`} key={task.id} index={index}>
       {(provided, snapshot) => (
         <Container
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          ref={provided.innerRef}
-          isDragging={snapshot.isDragging}
-        >
+  {...provided.draggableProps}
+  {...provided.dragHandleProps}
+  ref={provided.innerRef}
+  isDragging={snapshot.isDragging} // Update property name
+>
+
           <div style={{ display: "flex", justifyContent: "start", padding: 2 }}>
             <span>
               <small>
