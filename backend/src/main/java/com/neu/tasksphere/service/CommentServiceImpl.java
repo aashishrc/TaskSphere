@@ -42,7 +42,10 @@ public class CommentServiceImpl implements CommentService {
         Pageable pageable = PageRequest.of(page, size);
         Page<Comment> comments = commentRepository.findAll(pageable);
 
+        Comment.LastestCommentComparator commentComparator = new Comment.LastestCommentComparator();
+
         List<CommentDTO> commentDTOList = comments.stream()
+                .sorted(commentComparator)
                 .map(this::mapToCommentDTO)
                 .collect(Collectors.toList());
 

@@ -2,6 +2,7 @@ package com.neu.tasksphere.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Comparator;
 import java.util.Date;
 
 @Entity
@@ -78,5 +79,13 @@ public class Comment {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public static class LastestCommentComparator implements Comparator<Comment> {
+
+        @Override
+        public int compare(Comment o1, Comment o2) {
+            return o2.getCreatedAt().compareTo(o1.getCreatedAt());
+        }
     }
 }
