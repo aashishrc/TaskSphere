@@ -21,6 +21,7 @@ const Home = () => {
           <LeftNavigation onClickActivityButton={handleActivityButtonClick} />
         </div>
         <div className="main-content">
+          {/* <ActivityLog /> */}
           {displayActivityLog === "ActivityLog" && <ActivityLog />}
         </div>
       </div>
