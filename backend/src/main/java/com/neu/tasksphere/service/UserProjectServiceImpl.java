@@ -40,7 +40,7 @@ public class UserProjectServiceImpl implements UserProjectService {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "ID", request.getAssigneeId()));
 
         UserProjectFactory userProjectFactory = UserProjectFactory.getInstance();
-        UserProject userProject = userProjectFactory.getUserProjectFactory(user, project);
+        UserProject userProject = userProjectFactory.createUserProject(user, project);
         userProjectRepository.save(userProject);
 
         return ResponseEntity.ok(new ApiResponse(Boolean.TRUE, "Project assigned to user successfully"));

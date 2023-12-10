@@ -68,7 +68,7 @@ public class ProjectServiceImpl implements ProjectService {
 //        }
 
         ProjectFactory projectFactory = ProjectFactory.getInstance();
-        Project project = projectFactory.getProject(request.getName(), request.getDescription());
+        Project project = projectFactory.createProject(request.getName(), request.getDescription());
 
         projectRepository.save(project);
 

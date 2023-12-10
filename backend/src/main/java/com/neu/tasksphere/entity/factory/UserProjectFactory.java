@@ -18,7 +18,7 @@ public class UserProjectFactory {
         return instance;
     }
 
-    public UserProject getUserProjectFactory(User user, Project project) {
+    public UserProject createUserProject(User user, Project project) {
         return new UserProject(user, project);
     }
 

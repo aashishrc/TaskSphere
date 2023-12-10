@@ -14,7 +14,7 @@ public class ProjectFactory {
         return instance;
     }
 
-    public Project getProject(String name, String description) {
+    public Project createProject(String name, String description) {
         return new Project(name, description);
     }
 

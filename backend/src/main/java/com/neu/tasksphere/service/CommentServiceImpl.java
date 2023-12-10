@@ -3,6 +3,7 @@ package com.neu.tasksphere.service;
 import com.neu.tasksphere.entity.Comment;
 import com.neu.tasksphere.entity.Task;
 import com.neu.tasksphere.entity.User;
+import com.neu.tasksphere.entity.factory.CommentFactory;
 import com.neu.tasksphere.exception.ResourceNotFoundException;
 import com.neu.tasksphere.model.CommentDTO;
 import com.neu.tasksphere.model.UserDTO;
@@ -62,7 +63,7 @@ public class CommentServiceImpl implements CommentService {
         Task task = taskRepository.findById(request.getTaskId())
                 .orElseThrow(() -> new ResourceNotFoundException("Task", "ID", request.getTaskId()));
 
-        Comment comment = new Comment(user, task, request.getComment());
+        Comment comment = CommentFactory.INSTANCE.createComment(user, task, request.getComment());
 
         commentRepository.save(comment);
 
