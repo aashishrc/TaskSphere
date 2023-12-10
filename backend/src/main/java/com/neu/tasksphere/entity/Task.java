@@ -6,12 +6,13 @@ import com.neu.tasksphere.entity.enums.TaskStatus;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "tasks")
-public class Task {
+public class Task implements Comparator<Task> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -144,5 +145,10 @@ public class Task {
                 ", priority=" + this.getPriority() +
                 ", status=" + this.getStatus() +
                 ", createdAt=" + this.getCreatedAt() + ")";
+    }
+
+    @Override
+    public int compare(Task o1, Task o2) {
+        return Integer.compare(o1.getPriority().getPriority(), o2.getPriority().getPriority());
     }
 }

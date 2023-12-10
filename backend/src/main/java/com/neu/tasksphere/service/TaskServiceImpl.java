@@ -69,6 +69,7 @@ public class TaskServiceImpl implements TaskService {
         }
 
         List<TaskDTO> taskDTOList = taskStream
+                .sorted()
                 .map(this::mapToTaskDTO)
                 .collect(Collectors.toList());
 
