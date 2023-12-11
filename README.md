@@ -1,13 +1,82 @@
 # TaskSphere 
 
-About the project goes here
+TaskSphere is a collaborative project and task management system inspired by Kanban principles. It offers a visual  board for streamlined project organization, allowing users to create, assign, and track tasks effectively. With features such as detailed task management, real-time progress monitoring, and user assignments, TaskSphere facilitates seamless collaboration. Authentication is handled through JWT tokens, ensuring secure user access. The system also supports export/import functionalities for efficient project management. TaskSphere aims to enhance team coordination and project success with its user-friendly interface and robust features.
 
 # Tech Stack
 
 #### Backend: Spring Boot, PostgreSQL, Spring Security, JWT, JPA, Rest API
 #### Frontend: React, HTML, CSS, JS
 
-## Concepts Used
+## Concepts Used (Few Examples)
+
+**Inheritance**
+
+`ProjectRequest extends ProjectDTO`, `ProjectREpository extends JPARepository`, `BadRequestException extends RuntimeException`
+
+**Polymorphism** In entity models: User, Task, Project etc.
+
+`toString`,
+`equals`,
+`getters`,
+`setters`
+
+**APIs** Interfaces & Implementations
+`AuthenticationServiceImpl implements AuthenticationService`,
+`UserServiceImpl implements UserService`,
+`UserProjectServiceImpl implements UserProjectService`,
+`ProjectServiceImpl implements ProjectService`,
+`TaskServiceImpl implements TaskService`
+
+**Enums**
+
+`Role`: Admin, Manager, Developer
+
+`Task Priority`: Lowest, Low, Medium, High, Highest
+
+**Lambdas**
+
+**Inner classes**
+
+**Design Patterns**
+
+**Comparators**
+
+**Comparables**
+
+**Generics**
+
+`TaskRepository extends JpaRepository<Task, Integer>`,
+`ResponseEntity<TaskDTO>`,
+`ResponseEntity<APIResponse>`
+
+**Exception Handling**
+
+`BadRequestException extends RuntimeException`,
+`ResourceNotFoundException extends RuntimeException`,
+`UnauthorizedException extends RuntimeException`
+
+**CSV file handling** Importing Project from CSV File (Reading CSV Files)
+```
+public ResponseEntity<List<ProjectDTO>> importProject(File file) {
+        ProjectFactory projectFactory = ProjectFactory.getInstance();
+        List<ProjectDTO> list = new ArrayList<>();
+        try (FileReader fr = new FileReader(file); BufferedReader br = new BufferedReader(fr)) {
+            String inputLine = null;
+            while ((inputLine = br.readLine()) != null) {
+                String[] fields = inputLine.split(",");
+                Project project = projectFactory.createProject(fields[0], fields[1]);
+                projectRepository.save(project);
+                list.add(new ProjectDTO(project.getId(), project.getName(), project.getDescription()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.ok(list);
+    }
+```
+## Induvidual Contributions
+
 
 ## Class Diagram
 
@@ -19,19 +88,13 @@ The User Flow involves the creation, authentication, and management of users. Us
 
 Upon successful registration or login, a JWT token is generated for user authentication. The `Token` entity represents these tokens, allowing secure access to protected endpoints.
 
----
-
 ## Authentication Flow:
 
 The Authentication Flow begins with the `AuthenticationController`, handling user registration and login endpoints. These are processed by the `AuthenticationServiceImpl`. The `register` function creates a new user and generates a JWT token, while `login` authenticates the user and returns a JWT token. The `Token` entity represents a user's authentication token.
 
----
-
 ## Project Flow:
 
 In the Project Flow, `ProjectController` manages endpoints for project operations. The `ProjectServiceImpl` provides functions for interacting with projects, including getting project details, creating, updating, and deleting projects, assigning users to projects, and exporting/importing projects from/to CSV files. The `Project` entity represents a project, and `UserProject` represents the relationship between users and projects.
-
----
 
 ## Task Flow:
 
