@@ -8,7 +8,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 
 const NewTask = () => {
-    const [date, setDate] = useState();
     const [assignees, setAssignees] = useState([]);
 
     const [formData, setFormData] = useState({
@@ -17,7 +16,7 @@ const NewTask = () => {
         deadline: new Date(),
         priority: "",
         status: "",
-        assigneeId: ""
+        assigneeId: 0
     });
 
     const handleChange = (e) => {
@@ -32,7 +31,7 @@ const NewTask = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/tasks/create', formData, {
+            const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/v1/tasks/create`, formData, {
                 headers: {
                     'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0YXNrc3BoZXJlLmNvbSIsImlhdCI6MTcwMjI4MzU5NCwiZXhwIjoxNzAyMzY5OTk0fQ.QDhgryNB5TmISbDxg3TDOkpCkzcR1C4WD6NmbQrlG18`,
                     'Content-Type': 'application/json'
@@ -48,8 +47,43 @@ const NewTask = () => {
         }
     };
 
+    console.log(process.env)
 
-    return(
+    useEffect(() => {
+        // Function to fetch data from the API
+        // const fetchData = async () => {
+        //   try {
+        //     const response = await axios.get('http://localhost:8080/api/v1/projects?page=0&size=5', {
+        //         headers: {
+        //             'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0YXNrc3BoZXJlLmNvbSIsImlhdCI6MTcwMjI4MzU5NCwiZXhwIjoxNzAyMzY5OTk0fQ.QDhgryNB5TmISbDxg3TDOkpCkzcR1C4WD6NmbQrlG18`,
+        //           },
+        //     });
+
+        //     setData(response.data);
+        //   } catch (error) {
+        //     console.error('Error fetching data:', error);
+        //   }
+        // };
+
+        const fetchAssignees = async () => {
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/projects/1/users`, {
+                    headers: {
+                        'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0YXNrc3BoZXJlLmNvbSIsImlhdCI6MTcwMjI4MzU5NCwiZXhwIjoxNzAyMzY5OTk0fQ.QDhgryNB5TmISbDxg3TDOkpCkzcR1C4WD6NmbQrlG18`,
+                    },
+                });
+                setAssignees(response.data);
+            } catch (error) {
+                console.error('Error fetching assignees:', error);
+            }
+        };
+
+        // Call the fetchData function
+        // fetchData();
+        fetchAssignees();
+    }, []);
+
+    return (
         <div className='formBackground'>
             <Form onSubmit={handleSubmit}>
                 {/* <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
