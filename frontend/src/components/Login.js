@@ -32,10 +32,9 @@ const Login = () => {
       const { access_token } = response.data;
       localStorage.setItem("jwtToken", access_token);
 
-      const StoredValue = localStorage.getItem("jwtToken");
-      console.log(StoredValue);
+      const tokenData = JSON.parse(atob(access_token.split('.')[1]));
+      localStorage.setItem("user_role", tokenData.roles)
 
-      console.log(access_token);
       console.log("loginsuccessfull");
 
       navigate("/");
