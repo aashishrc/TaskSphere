@@ -13,7 +13,7 @@ public interface TaskService {
     ResponseEntity<TaskDTO> getTaskDetail(Integer id);
 
     ResponseEntity<PagedResponse<TaskDTO>> getAllTasks(
-            int page, int size, int userId, int projectId,
+            int page, int size, Integer userId, Integer projectId,
             TaskPriority priority, TaskStatus status);
 
     ResponseEntity<TaskDTO> createTask(TaskRequest request);

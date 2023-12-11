@@ -1,11 +1,5 @@
 spring:
   datasource:
-    #    url: jdbc:postgresql://localhost:5432/TaskSphere
-    #    username: admin
-    #    password: admin@123
-    #    url: jdbc:postgresql://berry.db.elephantsql.com:5432/pbnyanlk
-    #    username: pbnyanlk
-    #    password: NhZ-5GVDFzL2bV1AczxIGG4DuDCxWX9h
     url: jdbc:postgresql://tasksphere.c15gunhdudxb.us-east-2.rds.amazonaws.com:5432/TaskSphere
     username: postgres
     password: password

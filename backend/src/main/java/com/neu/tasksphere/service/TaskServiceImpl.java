@@ -18,6 +18,7 @@ import com.neu.tasksphere.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -45,17 +46,17 @@ public class TaskServiceImpl implements TaskService {
 
     public ResponseEntity<PagedResponse<TaskDTO>> getAllTasks(
             int page, int size,
-            int userId, int projectId,
+            Integer userId, Integer projectId,
             TaskPriority priority, TaskStatus status) {
 
         Page<Task> tasks;
         Pageable pageable = PageRequest.of(page, size);
 
-        if (userId > 0 && projectId > 0) {
+        if (userId != null && userId > 0 && projectId != null && projectId > 0) {
             tasks = taskRepository.findByAssigneeIdAndProjectId(userId, projectId, pageable);
-        } else if (userId > 0) {
+        } else if (userId != null && userId > 0) {
             tasks = taskRepository.findByAssigneeId(userId, pageable);
-        } else if (projectId > 0) {
+        } else if (projectId != null && projectId > 0) {
             tasks = taskRepository.findByProjectId(projectId, pageable);
         } else {
             tasks = taskRepository.findAll(pageable);
@@ -85,7 +86,6 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public ResponseEntity<TaskDTO> createTask(TaskRequest request) {
-
 
         Task task = new Task(
                 request.getName(),
