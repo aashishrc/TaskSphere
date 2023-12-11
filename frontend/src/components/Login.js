@@ -33,7 +33,8 @@ const Login = () => {
       localStorage.setItem("jwtToken", access_token);
 
       const tokenData = JSON.parse(atob(access_token.split('.')[1]));
-      localStorage.setItem("user_role", tokenData.roles)
+      localStorage.setItem("user_role", tokenData.roles);
+      localStorage.setItem("user_name", tokenData.sub);
 
       console.log("loginsuccessfull");
 

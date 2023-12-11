@@ -18,9 +18,9 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<UserDTO> getUserProfile(Integer id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "ID", id));
+    public ResponseEntity<UserDTO> getUserProfile(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "Username", username));
 
         UserDtoFactory userDtoFactory = UserDtoFactory.getInstance();
         UserDTO userDTO = userDtoFactory.createUserDTO(user.getId(),

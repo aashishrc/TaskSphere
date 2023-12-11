@@ -6,7 +6,7 @@ import com.neu.tasksphere.model.payload.response.ApiResponse;
 import org.springframework.http.ResponseEntity;
 
 public interface UserService {
-    ResponseEntity<UserDTO> getUserProfile(Integer id);
+    ResponseEntity<UserDTO> getUserProfile(String username);
 
     ResponseEntity<ApiResponse> updateUserProfile(UserRequest request);
 

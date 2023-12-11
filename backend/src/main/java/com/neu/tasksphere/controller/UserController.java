@@ -17,9 +17,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{id}/profile")
-    public ResponseEntity<UserDTO> getUserProfile(@PathVariable(value = "id") Integer id) {
-        return userService.getUserProfile(id);
+    @GetMapping("/{username}/profile")
+    public ResponseEntity<UserDTO> getUserProfile(@PathVariable(value = "username") String username) {
+        return userService.getUserProfile(username);
     }
 
     @PutMapping("/update")

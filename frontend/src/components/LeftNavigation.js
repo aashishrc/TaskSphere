@@ -1,16 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/css/LeftNavbar.css";
 import { Nav, Container, Button } from "react-bootstrap";
 import TaskList from "./TaskList";
+import axios from 'axios';
+const jwtToken = localStorage.getItem("jwtToken");
 
 const LeftNavigation = ({ onButtonClick }) => {
-  const userRole = localStorage.getItem("user_role");
-  const showCreateProjectButton = userRole === "Admin" || "Manager";
+  const userRole = localStorage.getItem('user_role');
+  const userName = localStorage.getItem('user_name');
+  const showCreateProjectButton = userRole === 'Admin' || 'Manager';
+  const [userProfile, setUserProfile] = useState({});
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+        try {
+            const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/users/${userName}/profile`, {
+                headers: {
+                    'Authorization': `Bearer ${jwtToken}`,
+                },
+            });
+            setUserProfile(response.data);
+        } catch (error) {
+            console.error('Error fetching assignees:', error);
+        }
+    };
+
+    fetchUserProfile();
+}, []);
+
   return (
     <Nav className="flex-column vertical-navbar">
       <Container className="profile-container">
-        <div>Profile Name</div>
-        <div>Role</div>
+        <div>Proifle: {userProfile.username}</div>
+        <div>Name: {userProfile.firstname} {userProfile.lastname}</div>
       </Container>
       <hr />
       <TaskList />
