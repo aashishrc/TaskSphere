@@ -4,3 +4,12 @@
 .main .main-content {
   flex: 1;
 }/*# sourceMappingURL=Home.css.map */
+
+.flex-container {
+  display: flex;
+}
+
+.project-detail-container {
+  flex-grow: 1; /* Takes up the remaining space */
+  padding: 20px; /* Adjust padding as needed */
+}

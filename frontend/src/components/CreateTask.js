@@ -51,21 +51,6 @@ const NewTask = () => {
     };
 
     useEffect(() => {
-        // Function to fetch data from the API
-        // const fetchData = async () => {
-        //   try {
-        //     const response = await axios.get('http://localhost:8080/api/v1/projects?page=0&size=5', {
-        //         headers: {
-        //             'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0YXNrc3BoZXJlLmNvbSIsImlhdCI6MTcwMjI4MzU5NCwiZXhwIjoxNzAyMzY5OTk0fQ.QDhgryNB5TmISbDxg3TDOkpCkzcR1C4WD6NmbQrlG18`,
-        //           },
-        //     });
-
-        //     setData(response.data);
-        //   } catch (error) {
-        //     console.error('Error fetching data:', error);
-        //   }
-        // };
-
         const fetchAssignees = async () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/projects/${projectData.projectId}/users`, {
@@ -79,23 +64,12 @@ const NewTask = () => {
             }
         };
 
-        // Call the fetchData function
-        // fetchData();
         fetchAssignees();
     }, []);
 
     return (
         <div className='formBackground'>
             <Form onSubmit={handleSubmit}>
-                {/* <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Project</Form.Label>
-                    <Form.Select aria-label="Default select example">
-                        <option>Select Project</option>
-                        <option value="1"></option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </Form.Select>
-                </Form.Group> */}
                 <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Task Name</Form.Label>
                     <Form.Control type='text'

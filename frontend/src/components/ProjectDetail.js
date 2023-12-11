@@ -11,12 +11,9 @@ const ProjectDetail = () => {
   const [showCreateTask, setShowCreateTask] = useState(false);
   const { projectId } = useParams();
 
-console.log(projectId)
-
   useEffect(() => {
     const fetchProjectDetail = async () => {
       try {
-        // Replace PROJECT_ID with the actual project ID you want to fetch
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/projects/${projectId}`, {
           headers: {
             'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0YXNrc3BoZXJlLmNvbSIsImlhdCI6MTcwMjI4MzU5NCwiZXhwIjoxNzAyMzY5OTk0fQ.QDhgryNB5TmISbDxg3TDOkpCkzcR1C4WD6NmbQrlG18`,
@@ -32,9 +29,9 @@ console.log(projectId)
   }, [projectId]);
 
   return (
-    <>
+    <div className="flex-container">
       <LeftNavigation />
-      <div className="project-detail">
+      <div className="project-detail-container">
         <Card>
           <Card.Body>
             <Card.Title>{projectData.name}</Card.Title>
@@ -51,7 +48,7 @@ console.log(projectId)
         </Card>
         {showCreateTask && <CreateTask />}
       </div>
-    </>
+    </div>
   );
 };
 
