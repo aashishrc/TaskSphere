@@ -59,7 +59,7 @@ const TaskList = () => {
 
   const handleRowClick = (event) => {
     const projectId = event.data.column2;
-    navigate(`/projectDetail/${projectId}`);
+    // navigate(`/projectDetail/${projectId}`);
   };
 
   return (

@@ -15,7 +15,15 @@ export default function KanbanBoard() {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/v1/tasks");
+        const response = await fetch("http://localhost:8080/api/v1/tasks", {
+          method: 'GET',
+          headers: {
+            'Authorization': "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJha3NoYXkiLCJpYXQiOjE3MDIyODY1MDcsImV4cCI6MTcwMjM3MjkwN30.8CuwNtpGJycjaG50DhUFwVVKvR24Neew1AOIhYmkkT8",
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
         const data = await response.json();
 
         // API returns tasks grouped by status

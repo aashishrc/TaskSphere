@@ -33,7 +33,7 @@ const ProjectForm = () => {
           const formData = new FormData();
           formData.append('csvFile', file);
   
-          const apiEndpoint = 'https://example.com/api/upload';
+          const apiEndpoint = 'http://localhost:8080/api/v1/projects/import';
           const response = await fetch(apiEndpoint, {
             method: 'POST',
             body: formData,
@@ -51,7 +51,7 @@ const ProjectForm = () => {
         }
       }else{
     // Send registration data to the backend
-    fetch('http://localhost:8080/createProject', {
+    fetch('http://localhost:8080/api/v1/projects/createProject', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

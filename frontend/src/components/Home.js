@@ -6,6 +6,8 @@ import { Button, Container, Nav } from "react-bootstrap";
 import { useState } from "react";
 import NewTask from "./CreateTask";
 import { ColumnGroup, Component } from "ag-grid-community";
+import ProjectForm from "./ProjectForm";
+import KanbanBoard from "./KanbanBoard";
 
 const Home = () => {
   const [displayComponent, setDisplayComponent] = useState(null);
@@ -20,6 +22,10 @@ const Home = () => {
         return <ActivityLog />;
       case "CreateTask":
         return <NewTask />;
+      case "CreateProject":
+        return <ProjectForm />;
+        case "viewAlltasks":
+          return <KanbanBoard />;
       default:
         return null;
     }

@@ -38,13 +38,13 @@ const LeftNavigation = ({ onButtonClick }) => {
       <hr />
       <TaskList />
       <hr />
-      <Button>View All tasks</Button>
+      <Button onClick={() => onButtonClick("viewAlltasks")}>View All tasks</Button>
       <hr />
       <Button onClick={() => onButtonClick("CreateTask")}>
         Create New Task
       </Button>
       <hr />
-      {showCreateProjectButton && <Button>Create New Project</Button>}
+      {showCreateProjectButton && <Button onClick={() => onButtonClick("CreateProject")}>Create New Project</Button>}
     </Nav>
   );
 };
