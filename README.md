@@ -1,25 +1,45 @@
-# TaskShere 
+# TaskSphere 
 
 About the project goes here
 
-# Backend
+# Tech Stack
 
-#### Spring Boot, PostgreSQL, Spring Security, JWT, JPA, Rest API
+#### Backend: Spring Boot, PostgreSQL, Spring Security, JWT, JPA, Rest API
+#### Frontend: React, HTML, CSS, JS
+
+## Concepts Used
 
 ## Class Diagram
 
 ## Flows
 
-## Concepts Used
+## User Flow:
 
+The User Flow involves the creation, authentication, and management of users. Users can register and log in through the `AuthenticationController`, which uses the `AuthenticationServiceImpl`. User information is stored in the `User` entity, and passwords are securely encoded.
 
-# Frontend
+Upon successful registration or login, a JWT token is generated for user authentication. The `Token` entity represents these tokens, allowing secure access to protected endpoints.
 
-#### React, HTML, CSS, JS
+---
 
+## Authentication Flow:
 
+The Authentication Flow begins with the `AuthenticationController`, handling user registration and login endpoints. These are processed by the `AuthenticationServiceImpl`. The `register` function creates a new user and generates a JWT token, while `login` authenticates the user and returns a JWT token. The `Token` entity represents a user's authentication token.
+
+---
+
+## Project Flow:
+
+In the Project Flow, `ProjectController` manages endpoints for project operations. The `ProjectServiceImpl` provides functions for interacting with projects, including getting project details, creating, updating, and deleting projects, assigning users to projects, and exporting/importing projects from/to CSV files. The `Project` entity represents a project, and `UserProject` represents the relationship between users and projects.
+
+---
+
+## Task Flow:
+
+The Task Flow is handled by `TaskController`, including endpoints for tasks like getting task details, creating, updating, and deleting tasks, assigning tasks to users, and changing task priority and status. The `TaskServiceImpl` implements functions for these operations. The `Task` entity represents a task with properties like name, description, deadline, priority, status, associated project, assignee, and comments.
 
 ## Steps to Setup
+
+### Backend
 
 **1. Clone the application**
 
@@ -75,11 +95,9 @@ mvn spring-boot:run
 ```
 The app will start running at <http://localhost:8080>
 
-# Getting Started with Create React App
+### Frontend
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
 
 In the project directory, you can run:
 
@@ -108,50 +126,9 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-
-**Swagger documentation**
+# Swagger documentation
 
 Swagger documentation will be available at <http://localhost:8080/swagger-ui/index.html>
 
