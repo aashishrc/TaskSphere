@@ -5,14 +5,14 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { Container } from "react-bootstrap";
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const TaskList = () => {
   // Row Data: The data to be displayed.
   const [rowData, setRowData] = useState([]);
   const navigate = useNavigate();
-  
+
   // Column Definitions: Defines & controls grid columns.
   const [colDefs, setColDefs] = useState([
     { headerName: "Projects", field: "column1", filter: true },
@@ -23,28 +23,34 @@ const TaskList = () => {
     // Function to fetch data from the API
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/v1/projects?page=0&size=5', {
-          headers: {
-            'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0YXNrc3BoZXJlIiwiaWF0IjoxNzAyMjk0MTMwLCJleHAiOjE3MDIzODA1MzB9.W10F141q_WlPVTpmxWUt-cyHqCiYY_dFQqC4NnqBHio`,
-          },
-        });
+        const response = await axios.get(
+          "http://localhost:8080/api/v1/projects?page=0&size=5",
+          {
+            headers: {
+              Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0YXNrc3BoZXJlIiwiaWF0IjoxNzAyMjk0MTMwLCJleHAiOjE3MDIzODA1MzB9.W10F141q_WlPVTpmxWUt-cyHqCiYY_dFQqC4NnqBHio`,
+            },
+          }
+        );
 
         const responseData = response.data;
         const projects = responseData?.data;
 
         if (Array.isArray(projects)) {
           // Map the projectsData to the format expected by AgGridReact
-          const formattedData = projects.map(project => ({
+          const formattedData = projects.map((project) => ({
             column1: project.name,
-            column2: project.id
+            column2: project.id,
           }));
 
           setRowData(formattedData);
         } else {
-          console.error('API response does not contain an array of projects:', response.data);
+          console.error(
+            "API response does not contain an array of projects:",
+            response.data
+          );
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 

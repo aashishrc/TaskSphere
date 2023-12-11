@@ -12,20 +12,18 @@ const Home = () => {
 
   const handleDisplayComponent = (Component) => {
     setDisplayComponent(Component);
-  }
+  };
 
   const display = () => {
     switch (displayComponent) {
       case "ActivityLog":
-        return <ActivityLog />
+        return <ActivityLog />;
       case "CreateTask":
-        return <NewTask/>
+        return <NewTask />;
       default:
         return null;
     }
-  }
-
- 
+  };
 
   return (
     <>
@@ -33,9 +31,7 @@ const Home = () => {
         <div className="verticalNavbar">
           <LeftNavigation onButtonClick={handleDisplayComponent} />
         </div>
-        <div className="main-content">
-          {display()}
-        </div>
+        <div className="main-content">{display()}</div>
       </div>
     </>
   );
