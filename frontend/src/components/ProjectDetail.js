@@ -5,6 +5,7 @@ import { Button, Card } from 'react-bootstrap';
 import LeftNavigation from "./LeftNavigation";
 import CreateTask from "./CreateTask";
 import "../styles/css/Home.css";
+const jwtToken = localStorage.getItem("jwtToken");
 
 const ProjectDetail = () => {
   const [projectData, setProjectData] = useState({});
@@ -16,7 +17,7 @@ const ProjectDetail = () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/projects/${projectId}`, {
           headers: {
-            'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0YXNrc3BoZXJlLmNvbSIsImlhdCI6MTcwMjI4MzU5NCwiZXhwIjoxNzAyMzY5OTk0fQ.QDhgryNB5TmISbDxg3TDOkpCkzcR1C4WD6NmbQrlG18`,
+            'Authorization': `Bearer ${jwtToken}`,
           },
         });
         setProjectData(response.data);

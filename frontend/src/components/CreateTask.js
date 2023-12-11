@@ -4,7 +4,8 @@ import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
-// import 'react-datepicker/dist/react-datepicker.css';
+import 'react-datepicker/dist/react-datepicker.css';
+const jwtToken = localStorage.getItem("jwtToken");
 
 const NewTask = () => {
     const [assignees, setAssignees] = useState([]);
@@ -36,7 +37,7 @@ const NewTask = () => {
         try {
             const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/v1/tasks/create`, formData, {
                 headers: {
-                    'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0YXNrc3BoZXJlLmNvbSIsImlhdCI6MTcwMjI4MzU5NCwiZXhwIjoxNzAyMzY5OTk0fQ.QDhgryNB5TmISbDxg3TDOkpCkzcR1C4WD6NmbQrlG18`,
+                    'Authorization': `Bearer ${jwtToken}`,
                     'Content-Type': 'application/json'
                 },
             });
@@ -55,7 +56,7 @@ const NewTask = () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/projects/${projectData.projectId}/users`, {
                     headers: {
-                        'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0YXNrc3BoZXJlLmNvbSIsImlhdCI6MTcwMjI4MzU5NCwiZXhwIjoxNzAyMzY5OTk0fQ.QDhgryNB5TmISbDxg3TDOkpCkzcR1C4WD6NmbQrlG18`,
+                        'Authorization': `Bearer ${jwtToken}`,
                     },
                 });
                 setAssignees(response.data);
