@@ -203,6 +203,7 @@ public ResponseEntity<List<ProjectDTO>> importProject(File file) {
 | Yuchen Zhang          | #002646829  | CSV Files, Repository Design Pattern, MVC Design Pattern
 
 # Class Diagram
+![tasksphere](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/assets/144740650/e75ca690-b27a-400c-b5d3-9a3fd3f19254)
 
 # Steps to Setup Backend
 
