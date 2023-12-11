@@ -1,6 +1,7 @@
 package com.neu.tasksphere.service;
 
 import com.neu.tasksphere.entity.Comment;
+import com.neu.tasksphere.entity.Project;
 import com.neu.tasksphere.entity.Task;
 import com.neu.tasksphere.entity.User;
 import com.neu.tasksphere.entity.enums.TaskPriority;
@@ -13,6 +14,7 @@ import com.neu.tasksphere.model.factory.TaskDtoFactory;
 import com.neu.tasksphere.model.payload.request.TaskRequest;
 import com.neu.tasksphere.model.payload.response.ApiResponse;
 import com.neu.tasksphere.model.payload.response.PagedResponse;
+import com.neu.tasksphere.repository.ProjectRepository;
 import com.neu.tasksphere.repository.TaskRepository;
 import com.neu.tasksphere.repository.UserRepository;
 import org.springframework.data.domain.Page;
@@ -31,10 +33,12 @@ public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
+    private final ProjectRepository projectRepository;
 
-    public TaskServiceImpl(TaskRepository taskRepository, UserRepository userRepository) {
+    public TaskServiceImpl(TaskRepository taskRepository, UserRepository userRepository, ProjectRepository projectRepository) {
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
+        this.projectRepository = projectRepository;
     }
 
     public ResponseEntity<TaskDTO> getTaskDetail(Integer id) {
@@ -87,12 +91,16 @@ public class TaskServiceImpl implements TaskService {
 
     public ResponseEntity<TaskDTO> createTask(TaskRequest request) {
 
+        Project project = projectRepository.findById(request.getProjectId())
+                .orElseThrow(() -> new ResourceNotFoundException("Project", "ID", request.getProjectId()));
+
         Task task = new Task(
                 request.getName(),
                 request.getDescription(),
                 request.getDeadline(),
                 request.getPriority(),
-                request.getStatus()
+                request.getStatus(),
+                project
         );
 
         if (request.getAssigneeId() > 0) {

@@ -45,12 +45,14 @@ public class Task implements Comparable<Task> {
             String description,
             Date deadline,
             TaskPriority priority,
-            TaskStatus status) {
+            TaskStatus status,
+            Project project) {
         this.name = name;
         this.description = description;
         this.deadline = deadline;
         this.priority = priority;
         this.status = status;
+        this.project = project;
     }
 
     public Task() {
