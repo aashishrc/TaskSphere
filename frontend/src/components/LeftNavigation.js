@@ -20,6 +20,7 @@ const LeftNavigation = ({ onButtonClick }) => {
                 },
             });
             setUserProfile(response.data);
+            localStorage.setItem("user_id", response.data.id);
         } catch (error) {
             console.error('Error fetching assignees:', error);
         }

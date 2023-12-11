@@ -1,6 +1,7 @@
 package com.neu.tasksphere.service;
 
 import com.neu.tasksphere.entity.Project;
+import com.neu.tasksphere.entity.Task;
 import com.neu.tasksphere.entity.factory.ProjectFactory;
 import com.neu.tasksphere.exception.ResourceNotFoundException;
 import com.neu.tasksphere.model.ProjectDTO;
@@ -9,6 +10,7 @@ import com.neu.tasksphere.model.payload.request.ProjectRequest;
 import com.neu.tasksphere.model.payload.response.ApiResponse;
 import com.neu.tasksphere.model.payload.response.PagedResponse;
 import com.neu.tasksphere.repository.ProjectRepository;
+import com.neu.tasksphere.repository.UserProjectRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,9 +25,12 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final UserProjectService userProjectService;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository) {
+    public ProjectServiceImpl(ProjectRepository projectRepository,
+                              UserProjectService userProjectService) {
         this.projectRepository = projectRepository;
+        this.userProjectService = userProjectService;
     }
 
     public ResponseEntity<ProjectDTO> getProject(Integer id) {
@@ -36,11 +41,25 @@ public class ProjectServiceImpl implements ProjectService {
         return ResponseEntity.ok(projectDTO);
     }
 
-    public ResponseEntity<PagedResponse<ProjectDTO>> getAllProjects(int page, int size) {
+    public ResponseEntity<PagedResponse<ProjectDTO>> getAllProjects(int page, int size, Integer userId) {
         List<ProjectDTO> projectDtoList = new ArrayList<>();
 
+        Page<Project> projects;
         Pageable pageable = PageRequest.of(page, size);
-        Page<Project> projects = projectRepository.findAll(pageable);
+
+        if (userId != null && userId > 0) {
+            projectDtoList = userProjectService.getAllProjectsByUser(userId);
+            return ResponseEntity.ok(new PagedResponse<>(
+                    projectDtoList,
+                    0,
+                    0,
+                    0,
+                    0,
+                    false)
+            );
+        } else {
+            projects = projectRepository.findAll(pageable);
+        }
 
         for (Project project : projects.getContent()) {
             projectDtoList.add(new ProjectDTO(
@@ -105,7 +124,7 @@ public class ProjectServiceImpl implements ProjectService {
         List<Project> projects = projectRepository.findAll();
         List<ProjectDTO> list = new ArrayList<>();
         try (FileWriter fw = new FileWriter("src/data/project.csv"); BufferedWriter bw = new BufferedWriter(fw)) {
-            for (Project p: projects) {
+            for (Project p : projects) {
                 StringBuilder sb = new StringBuilder();
                 sb.append(p.getId()).append(",");
                 sb.append(p.getName()).append(",");

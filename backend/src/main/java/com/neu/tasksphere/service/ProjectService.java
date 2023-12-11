@@ -13,7 +13,7 @@ import java.util.List;
 public interface ProjectService {
     ResponseEntity<ProjectDTO> getProject(Integer id);
 
-    ResponseEntity<PagedResponse<ProjectDTO>> getAllProjects(int page, int size);
+    ResponseEntity<PagedResponse<ProjectDTO>> getAllProjects(int page, int size, Integer userId);
 
     ResponseEntity<ProjectDTO> createProject(ProjectRequest request);
 

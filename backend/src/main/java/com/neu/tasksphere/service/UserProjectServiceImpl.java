@@ -5,6 +5,7 @@ import com.neu.tasksphere.entity.User;
 import com.neu.tasksphere.entity.UserProject;
 import com.neu.tasksphere.entity.factory.UserProjectFactory;
 import com.neu.tasksphere.exception.ResourceNotFoundException;
+import com.neu.tasksphere.model.ProjectDTO;
 import com.neu.tasksphere.model.UserDTO;
 import com.neu.tasksphere.model.payload.request.ProjectRequest;
 import com.neu.tasksphere.model.payload.response.ApiResponse;
@@ -63,5 +64,23 @@ public class UserProjectServiceImpl implements UserProjectService {
                 .toList();
 
         return ResponseEntity.ok(userDTOList);
+    }
+
+    public List<ProjectDTO> getAllProjectsByUser(Integer userId) {
+
+        List<UserProject> usersOfProject = userProjectRepository.findByUserId(userId);
+
+        List<ProjectDTO> projectDTOList = usersOfProject.stream()
+                .map((userProject) -> {
+                    Project project = userProject.getProject();
+                    ProjectDTO projectDTO = new ProjectDTO();
+                    projectDTO.setId(project.getId());
+                    projectDTO.getDescription(project.getDescription());
+                    projectDTO.setName(project.getName());
+                    return projectDTO;
+                })
+                .toList();
+
+        return projectDTOList;
     }
 }

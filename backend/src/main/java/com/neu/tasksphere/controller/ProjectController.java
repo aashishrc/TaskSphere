@@ -37,9 +37,10 @@ public class ProjectController {
     @GetMapping
     public ResponseEntity<PagedResponse<ProjectDTO>> getAllProjects(
             @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
-            @RequestParam(name = "size", required = false, defaultValue = "5") Integer size) {
+            @RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
+            @RequestParam(name = "userId", required = false) Integer userId ) {
 
-        return projectService.getAllProjects(page, size);
+        return projectService.getAllProjects(page, size, userId);
     }
 
     @PostMapping("/create")
