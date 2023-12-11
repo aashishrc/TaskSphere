@@ -1,40 +1,90 @@
-import React, { useState , useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import '../styles/css/CreateTask.css'
-import Form from 'react-bootstrap/Form';
-import 'react-datepicker/dist/react-datepicker.css';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 
-const NewTask = () =>{
+const NewTask = () => {
     const [date, setDate] = useState();
-    const [data, setData] = useState([]);
+    const [assignees, setAssignees] = useState([]);
+
+    const [formData, setFormData] = useState({
+        name: "",
+        description: "",
+        deadline: new Date(),
+        priority: "",
+        status: "",
+        assigneeId: ""
+    });
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleDateChange = (date) => {
+        setFormData({ ...formData, deadline: date });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.post('http://localhost:8080/api/v1/tasks/create', formData, {
+                headers: {
+                    'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0YXNrc3BoZXJlLmNvbSIsImlhdCI6MTcwMjI4MzU5NCwiZXhwIjoxNzAyMzY5OTk0fQ.QDhgryNB5TmISbDxg3TDOkpCkzcR1C4WD6NmbQrlG18`,
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            if (response.status === 200 && response.data.id > 0) {
+                window.location.reload();
+            }
+
+        } catch (error) {
+            console.error('Error submitting form:', error);
+        }
+    };
+
 
     useEffect(() => {
         // Function to fetch data from the API
-        const fetchData = async () => {
-          try {
-            const response = await axios.get('http://localhost:8080/api/v1/projects?page=0&size=5', {
-                headers: {
-                    'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0YXNrc3BoZXJlLmNvbSIsImlhdCI6MTcwMjI2MzEzOSwiZXhwIjoxNzAyMzQ5NTM5fQ.pywRzp3DiTErzwDFnGQRFQvxJrPFBQYzTukXnhHnVSc`,
-                  },
-            });
-            
-            setData(response.data);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
+        // const fetchData = async () => {
+        //   try {
+        //     const response = await axios.get('http://localhost:8080/api/v1/projects?page=0&size=5', {
+        //         headers: {
+        //             'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0YXNrc3BoZXJlLmNvbSIsImlhdCI6MTcwMjI4MzU5NCwiZXhwIjoxNzAyMzY5OTk0fQ.QDhgryNB5TmISbDxg3TDOkpCkzcR1C4WD6NmbQrlG18`,
+        //           },
+        //     });
+
+        //     setData(response.data);
+        //   } catch (error) {
+        //     console.error('Error fetching data:', error);
+        //   }
+        // };
+
+        const fetchAssignees = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/v1/projects/1/users`, {
+                    headers: {
+                        'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0YXNrc3BoZXJlLmNvbSIsImlhdCI6MTcwMjI4MzU5NCwiZXhwIjoxNzAyMzY5OTk0fQ.QDhgryNB5TmISbDxg3TDOkpCkzcR1C4WD6NmbQrlG18`,
+                    },
+                });
+                setAssignees(response.data);
+            } catch (error) {
+                console.error('Error fetching assignees:', error);
+            }
         };
-    
+
         // Call the fetchData function
-        fetchData();
-      }, []);
+        // fetchData();
+        fetchAssignees();
+    }, []);
 
-      console.log(data);
-
-    return(
+    return (
         <div className='formBackground'>
-            <Form>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form onSubmit={handleSubmit}>
+                {/* <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Project</Form.Label>
                     <Form.Select aria-label="Default select example">
                         <option>Select Project</option>
@@ -42,51 +92,79 @@ const NewTask = () =>{
                         <option value="2">Two</option>
                         <option value="3">Three</option>
                     </Form.Select>
-                </Form.Group>
+                </Form.Group> */}
                 <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Task Name</Form.Label>
-                    <Form.Control type='text'/>
+                    <Form.Control type='text'
+                        name='name'
+                        value={formData.name}
+                        onChange={handleChange}
+                    />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Task Description</Form.Label>
-                    <Form.Control as="textarea" rows={3} />
+                    <Form.Control as="textarea" rows={3}
+                        name='description'
+                        value={formData.description}
+                        onChange={handleChange}
+                    />
                 </Form.Group>
 
                 <div className='DatePicker'>
-                    <Form.Label>Select Dealdine</Form.Label>
-                    <input type='date' onChange={e => setDate(e.target.value)}></input>
+                    <Form.Label>Select Deadline</Form.Label>
+                    <DatePicker
+                        selected={formData.deadline}
+                        value={formData.deadline}
+                        onChange={handleDateChange}
+                    />
                 </div>
 
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Select Priority</Form.Label>
-                    <Form.Select aria-label="Default select example">
-                        <option>Priority</option>
-                        <option value="1">Highest</option>
-                        <option value="2">High</option>
-                        <option value="3">Medium</option>
-                        <option value="2">Low</option>
-                        <option value="3">Lowest</option>
+                    <Form.Select aria-label="Default select example"
+                        name='priority'
+                        value={formData.priority}
+                        onChange={handleChange}>
+                        <option> -- </option>
+                        <option value="Highest">Highest</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                        <option value="Lowest">Lowest</option>
                     </Form.Select>
                 </Form.Group>
-                
-                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Assignee</Form.Label>
-                    <Form.Select aria-label="Default select example">
-                        <option>Select Member</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </Form.Select>
-                </Form.Group>
-            
-            </Form>
-            <div className='Buttons'>
-                <Button variant='primary btn-lg'>Assign</Button>
-                <Button variant='danger btn-lg'>Cancel</Button>
-            </div>
-            
 
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Select Status</Form.Label>
+                    <Form.Select aria-label="Select Status"
+                        name='status'
+                        value={formData.status}
+                        onChange={handleChange}>
+                        <option> -- </option>
+                        <option value="Open">Open</option>
+                        <option value="InProgress">InProgress</option>
+                        <option value="OnHold">OnHold</option>
+                        <option value="Done">Done</option>
+                        <option value="InReview">InReview</option>
+                    </Form.Select>
+                </Form.Group>
+
+                <Form.Select aria-label="Assignee"
+                    name='assigneeId'
+                    value={formData.assigneeId}
+                    onChange={handleChange}>
+                    <option>Select Assignee</option>
+                    {assignees.map((assignee) => (
+                        <option key={"assignee_" + assignee.id} value={assignee.id}>{`${assignee.firstname} ${assignee.lastname}`}</option>
+                    ))}
+                </Form.Select>
+
+                <div className='Buttons'>
+                    <Button variant='primary btn-lg' type='submit'>Assign</Button>
+                    <Button variant='danger btn-lg' type='reset'>Cancel</Button>
+                </div>
+            </Form>
         </div>
     )
 }

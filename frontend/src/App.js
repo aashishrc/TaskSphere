@@ -10,8 +10,6 @@ import Column from "./components/Column";
 import KanbanBoard from "./components/KanbanBoard";
 import Task from "./components/Task";
 import CreateTask from "./components/CreateTask"
-import cors from 'cors'
-
 
 function App() {
   return (
