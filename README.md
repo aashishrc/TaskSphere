@@ -2,12 +2,43 @@
 
 TaskSphere is a collaborative project and task management system inspired by Kanban principles. It offers a visual  board for streamlined project organization, allowing users to create, assign, and track tasks effectively. With features such as detailed task management, real-time progress monitoring, and user assignments, TaskSphere facilitates seamless collaboration. Authentication is handled through JWT tokens, ensuring secure user access. The system also supports export/import functionalities for efficient project management. TaskSphere aims to enhance team coordination and project success with its user-friendly interface and robust features.
 
+# Index
+1. [Introduction]()
+2. [Tech Stack]()
+3. [Flows]()
+4. [Concepts Used]()
+5. [Individual Contributions]()
+6. [Class Diagram]()
+7. [Steps to Setup Backend]()
+8. [Steps to Setup Frontend]()
+9. [Swagger Documentation]()
+
 # Tech Stack
 
-#### Backend: Spring Boot, PostgreSQL, Spring Security, JWT, JPA, Rest API
+#### Backend: Java, Spring Boot, PostgreSQL, Spring Security, JWT, JPA, Rest API
 #### Frontend: React, HTML, CSS, JS
 
-## Concepts Used (Few Examples)
+# Flows
+
+### User
+
+The User Flow involves the creation, authentication, and management of users. Users can register and log in through the `AuthenticationController`, which uses the `AuthenticationServiceImpl`. User information is stored in the `User` entity, and passwords are securely encoded.
+
+Upon successful registration or login, a JWT token is generated for user authentication. The `Token` entity represents these tokens, allowing secure access to protected endpoints.
+
+### Authentication
+
+The Authentication Flow begins with the `AuthenticationController`, handling user registration and login endpoints. These are processed by the `AuthenticationServiceImpl`. The `register` function creates a new user and generates a JWT token, while `login` authenticates the user and returns a JWT token. The `Token` entity represents a user's authentication token.
+
+### Project
+
+In the Project Flow, `ProjectController` manages endpoints for project operations. The `ProjectServiceImpl` provides functions for interacting with projects, including getting project details, creating, updating, and deleting projects, assigning users to projects, and exporting/importing projects from/to CSV files. The `Project` entity represents a project, and `UserProject` represents the relationship between users and projects.
+
+### Task
+
+The Task Flow is handled by `TaskController`, including endpoints for tasks like getting task details, creating, updating, and deleting tasks, assigning tasks to users, and changing task priority and status. The `TaskServiceImpl` implements functions for these operations. The `Task` entity represents a task with properties like name, description, deadline, priority, status, associated project, assignee, and comments.
+
+# Concepts Used (Few Examples)
 
 **Inheritance**
 
@@ -135,7 +166,7 @@ public ResponseEntity<List<ProjectDTO>> importProject(File file) {
 **Design Patterns**
 
 
-## Induvidual Contributions
+# Induvidual Contributions
 
 | Name                  | Nu ID       | Contributions                                                                                                         
 |-----------------------|-------------|-----------------------------------------------------------------------------------------------------------------------
@@ -147,31 +178,9 @@ public ResponseEntity<List<ProjectDTO>> importProject(File file) {
 | Sai Geeta Acharya     | #002627749  | Comparator, Inner Classes, Eager Singleton Factory Pattern
 | Yuchen Zhang          | #002646829  | CSV Files, MVC Design Pattern
 
-## Class Diagram
+# Class Diagram
 
-## Flows
-
-## User Flow:
-
-The User Flow involves the creation, authentication, and management of users. Users can register and log in through the `AuthenticationController`, which uses the `AuthenticationServiceImpl`. User information is stored in the `User` entity, and passwords are securely encoded.
-
-Upon successful registration or login, a JWT token is generated for user authentication. The `Token` entity represents these tokens, allowing secure access to protected endpoints.
-
-## Authentication Flow:
-
-The Authentication Flow begins with the `AuthenticationController`, handling user registration and login endpoints. These are processed by the `AuthenticationServiceImpl`. The `register` function creates a new user and generates a JWT token, while `login` authenticates the user and returns a JWT token. The `Token` entity represents a user's authentication token.
-
-## Project Flow:
-
-In the Project Flow, `ProjectController` manages endpoints for project operations. The `ProjectServiceImpl` provides functions for interacting with projects, including getting project details, creating, updating, and deleting projects, assigning users to projects, and exporting/importing projects from/to CSV files. The `Project` entity represents a project, and `UserProject` represents the relationship between users and projects.
-
-## Task Flow:
-
-The Task Flow is handled by `TaskController`, including endpoints for tasks like getting task details, creating, updating, and deleting tasks, assigning tasks to users, and changing task priority and status. The `TaskServiceImpl` implements functions for these operations. The `Task` entity represents a task with properties like name, description, deadline, priority, status, associated project, assignee, and comments.
-
-## Steps to Setup
-
-### Backend
+# Steps to Setup Backend
 
 **1. Clone the application**
 
@@ -227,7 +236,7 @@ mvn spring-boot:run
 ```
 The app will start running at <http://localhost:8080>
 
-### Frontend
+# Steps to Setup Frontend
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
