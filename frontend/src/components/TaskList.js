@@ -17,7 +17,7 @@ const TaskList = () => {
   // Column Definitions: Defines & controls grid columns.
   const [colDefs, setColDefs] = useState([
     { headerName: "Projects", field: "column1", filter: true },
-    { headerName: "Status", field: "column2", filter: true },
+    { headerName: "ProjectID", field: "column2", filter: true },
   ]);
 
   useEffect(() => {
