@@ -1,5 +1,6 @@
 package com.neu.tasksphere.controller;
 
+import com.neu.tasksphere.entity.Project;
 import com.neu.tasksphere.model.ProjectDTO;
 import com.neu.tasksphere.model.UserDTO;
 import com.neu.tasksphere.model.payload.request.ProjectRequest;
@@ -10,7 +11,9 @@ import com.neu.tasksphere.service.UserProjectService;
 import com.neu.tasksphere.service.UserProjectServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 @RestController
@@ -62,5 +65,16 @@ public class ProjectController {
     @GetMapping("/{id}/users")
     public ResponseEntity<List<UserDTO>> getAllUsersByProject(@PathVariable("id") Integer id) {
         return userProjectService.getAllUsersByProject(id);
+    }
+
+    @RequestMapping("/export")
+    public ResponseEntity<List<ProjectDTO>> exportProject() {
+        return projectService.exportProject();
+
+    }
+
+    @PostMapping("/import")
+    public ResponseEntity<List<ProjectDTO>> importProject(@RequestParam("file") File file) {
+        return projectService.importProject(file);
     }
 }
