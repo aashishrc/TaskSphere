@@ -29,10 +29,6 @@ const ProjectForm = () => {
     e.preventDefault();
     console.log('Form submitted:', formData);
     if (file) {
-      console.log('File uploaded:', file);
-      // You can handle the file upload logic, such as sending the file to a server.
-    }
-    if (file) {
         try {
           const formData = new FormData();
           formData.append('csvFile', file);
