@@ -1,9 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import "../styles/css/Login.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const Login = () => {
+  const [loginFormData, setLoginFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const navigate = useNavigate();
+
+  const handleOnChange = (e) => {
+    console.log("changed");
+    setLoginFormData({ ...loginFormData, [e.target.name]: e.target.value });
+  };
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      console.log(loginFormData);
+      const response = await axios.post(
+        `${baseUrl}/api/v1/auth/login`,
+        loginFormData
+      );
+
+      console.log(response);
+      const { access_token } = response.data;
+      localStorage.setItem("jwtToken", access_token);
+
+      const StoredValue = localStorage.getItem("jwtToken");
+      console.log(StoredValue);
+
+      console.log(access_token);
+      console.log("loginsuccessfull");
+
+      navigate("/");
+    } catch (error) {
+      console.log("Login failed", error);
+    }
+  };
+
   return (
     <>
       <Container fluid className="login-main">
@@ -15,13 +55,19 @@ const Login = () => {
         <Container className="login-form">
           <Row className="justify-content-md-center">
             <Col md="9">
-              <Form>
+              <Form onSubmit={handleOnSubmit}>
                 <Form.Group
                   controlId="formBasicUsername"
                   className="formGroup-custom"
                 >
                   <Form.Label>Username :</Form.Label>
-                  <Form.Control type="text" placeholder="Enter username" />
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter username"
+                    name="username"
+                    onChange={handleOnChange}
+                    value={loginFormData.usename}
+                  />
                 </Form.Group>
                 <br />
                 <Form.Group
@@ -29,12 +75,18 @@ const Login = () => {
                   className="formGroup-custom"
                 >
                   <Form.Label>Password :</Form.Label>
-                  <Form.Control type="password" placeholder="Password" />
+                  <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    onChange={handleOnChange}
+                    value={loginFormData.password}
+                  />
                 </Form.Group>
 
                 <br />
 
-                <Button variant="secondary" type="button">
+                <Button variant="secondary" type="submit">
                   Login
                 </Button>
               </Form>

@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+// import 'react-datepicker/dist/react-datepicker.css';
 
 const NewTask = () => {
     const [assignees, setAssignees] = useState([]);

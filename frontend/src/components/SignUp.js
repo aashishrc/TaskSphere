@@ -1,49 +1,43 @@
 import React, { useState } from "react";
 import "../styles/css/SignUp.css";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-// import baseUrl from process.env.BASE_URL;
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-    firstName: "",
-    lastName: "",
-    role: "",
+    firstname: "",
+    lastname: "",
+    role: "Admin",
   });
+
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     console.log("changed");
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(
-        "http://localhost:8080/api/v1/auth/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
+      console.log(formData);
+      const response = await axios.post(
+        `${baseUrl}/api/v1/auth/register`,
+        formData
       );
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Signup successful:", data);
-        // Handle successful signup, e.g., redirect to login page
-      } else {
-        const errorData = await response.json();
-        console.error("Signup failed:", errorData);
-        // Handle signup failure, e.g., show an error message
-      }
+      console.log("signup successful");
+      setErrorMessage("");
+      navigate("/login");
     } catch (error) {
-      console.error("Error during signup:", error);
-      // Handle network errors or other exceptions
+      console.error("Error during signup:", error.response);
+      setErrorMessage("Sign up failed", error.response);
     }
   };
 
@@ -69,7 +63,8 @@ const SignUp = () => {
                       <Form.Control
                         type="text"
                         placeholder="Enter your First Name"
-                        value={formData.firstName}
+                        value={formData.firstname}
+                        name="firstname"
                         onChange={handleChange}
                       />
                       {/* <input type="text"></input> */}
@@ -84,7 +79,8 @@ const SignUp = () => {
                       <Form.Control
                         type="text"
                         placeholder="Enter your Last Name"
-                        value={formData.lastName}
+                        value={formData.lastname}
+                        name="lastname"
                         onChange={handleChange}
                       />
                     </Form.Group>
@@ -102,6 +98,7 @@ const SignUp = () => {
                         type="email"
                         placeholder="Enter your email Id"
                         value={formData.username}
+                        name="username"
                         onChange={handleChange}
                       />
                     </Form.Group>
@@ -112,10 +109,14 @@ const SignUp = () => {
                       className="formGroup-custom"
                     >
                       <Form.Label>Choose your Role : </Form.Label>
-                      <Form.Select>
-                        <option>Manager</option>
-                        <option> Tech Lead</option>
-                        <option>Developer</option>
+                      <Form.Select
+                        name="role"
+                        onChange={handleChange}
+                        value={formData.role}
+                      >
+                        <option value="Admin">Admin</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Developer">Developer</option>
                       </Form.Select>
                     </Form.Group>
                   </Col>
@@ -132,6 +133,7 @@ const SignUp = () => {
                       <Form.Control
                         type="password"
                         placeholder="Enter your Password"
+                        name="password"
                         value={formData.password}
                         onChange={handleChange}
                       />
@@ -143,6 +145,12 @@ const SignUp = () => {
                 <Button variant="secondary" type="submit">
                   Create Account
                 </Button>
+                <br />
+                {errorMessage && (
+                  <span style={{ color: "red", marginLeft: "10px" }}>
+                    {errorMessage}
+                  </span>
+                )}
               </Form>
             </Col>
           </Row>

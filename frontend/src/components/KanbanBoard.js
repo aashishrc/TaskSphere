@@ -2,91 +2,76 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import Column from "./Column";
 import "../styles/css/KanbanBoard.css";
-
+ 
 export default function KanbanBoard() {
   // Initial data for tasks in different states
   const initialNotStartedTasks = [
-    { id: 1, title: "Task 1", status: "notStarted" },
-    { id: 2, title: "Task 2", status: "notStarted" },
+    { id: 1, title: "Task 1", status: "Open" },
+    { id: 2, title: "Task 2", status: "Open" },
     // ... add more not started tasks
   ];
-
+ 
   const initialInProgressTasks = [
-    { id: 3, title: "Task 3", status: "inProgress" },
-    { id: 4, title: "Task 4", status: "inProgress" },
+    { id: 3, title: "Task 3", status: "InProgress" },
+    { id: 4, title: "Task 4", status: "InProgress" },
     // ... add more in progress tasks
   ];
-
+ 
   const initialCompletedTasks = [
-    { id: 5, title: "Task 5", status: "completed" },
-    { id: 6, title: "Task 6", status: "completed" },
+    { id: 5, title: "Task 5", status: "Done" },
+    { id: 6, title: "Task 6", status: "Done" },
     // ... add more completed tasks
   ];
-
+ 
   // State variables to manage tasks and new task title
-  const [notStarted, setNotStarted] = useState(initialNotStartedTasks || []);
-  const [inProgress, setInProgress] = useState(initialInProgressTasks || []);
-  const [completed, setCompleted] = useState(initialCompletedTasks || []);
+  const [notStarted, setNotStarted] = useState([]);
+  const [inProgress, setInProgress] = useState([]);
+  const [completed, setCompleted] = useState([]);
   const [newTaskTitle, setNewTaskTitle] = useState("");
-
-    // Get all tasks 
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await fetch('http://localhost:8080/api/v1/tasks', {
-            method: 'GET',
-            headers: {
-              'Authorization': "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJha3NoYXkiLCJpYXQiOjE3MDIyODY1MDcsImV4cCI6MTcwMjM3MjkwN30.8CuwNtpGJycjaG50DhUFwVVKvR24Neew1AOIhYmkkT8",
-            }
-          });
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          const tasks = await response.json();
-          console.log(tasks);
-          const notStartedTasks = tasks.data.filter((task) => task.status === 'Open');
-          const inProgressTasks = tasks.data.filter((task) => task.status === 'InProgress');
-          const completedTasks = tasks.data.filter((task) => task.status === 'Done');
-  
-          setNotStarted(notStartedTasks);
-          setInProgress(inProgressTasks);
-          setCompleted(completedTasks);
-        } catch (error) {
-          console.error('Error fetching tasks:', error);
-        }
-      };
-  
-      fetchData();
-    }, []);
-  
-
-  // Function to handle the end of a drag operation
-  // Function to handle the end of a drag operation
-// Function to handle the end of a drag operation
+ 
+  // Fetch tasks from the backend when the component mounts
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/v1/tasks");
+        const data = await response.json();
+ 
+        // API returns tasks grouped by status
+        setNotStarted(data.Open || []);
+        setInProgress(data.InProgress || []);
+        setCompleted(data.Done || []);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+ 
+    fetchTasks();
+  }, []); // The empty dependency array ensures that this effect runs only once on mount
+ 
+ 
 // Function to handle the end of a drag operation
 const handleDragEnd = async (result) => {
   console.log("result:", result);
-
+ 
   if (!result.destination) {
     console.log("No destination");
     return;
   }
-
+ 
   const { destination, source, draggableId } = result;
   console.log("source:", source);
   console.log("destination:", destination);
-
+ 
   // If the source and destination columns are the same, do nothing
   if (source.droppableId === destination.droppableId) {
     console.log("Same column, do nothing");
     return;
   }
-
+ 
   // Find the task based on the dragged ID
   const task = findItemById(draggableId, [...notStarted, ...inProgress, ...completed]);
   console.log("task:", task);
-  console.log("----- Dragging Task --------")
-
+ 
   if (!task) {
     console.log("Task not found");
     return;
@@ -190,7 +175,7 @@ const handleDragEnd = async (result) => {
   const updatedNotStarted = notStarted.filter((t) => t.id !== task.id);
   const updatedInProgress = inProgress.filter((t) => t.id !== task.id);
   const updatedCompleted = completed.filter((t) => t.id !== task.id);
-
+ 
   // Logic for moving tasks between columns
   if (destination.droppableId === "2" && task.status === "notStarted") {
     // Move the task to "In Progress"
@@ -204,14 +189,10 @@ const handleDragEnd = async (result) => {
     setCompleted((prevCompleted) => [...prevCompleted, { ...task, status: "completed" }]);
   }
 };
-
-
-
-
+ 
   // Function to find an item by its ID in an array
   const findItemById = (id, array) => array.find((item) => item && item.id.toString() === id.toString());
-
-
+ 
   // Function to handle the creation of a new task
   const handleCreateTask = () => {
     // Implement logic to create a new task
@@ -220,14 +201,14 @@ const handleDragEnd = async (result) => {
       title: newTaskTitle,
       status: "notStarted",
     };
-
+ 
     // Update the state to include the new task in the "To Do" column
     setNotStarted([...notStarted, newTask]);
-
+ 
     // Clear the new task title input
     setNewTaskTitle("");
   };
-
+ 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       <div className="kanban-container">
