@@ -163,20 +163,44 @@ public ResponseEntity<List<ProjectDTO>> importProject(File file) {
     }
 ```
 
-**Design Patterns**
+## Design Patterns
+
+1. **Repository Pattern:**
+   - `UserRepository.java`, `UserProjectRepository.java`, `TaskRepository.java`, `ProjectRepository.java`
+   - Provides a consistent and abstracted interface for data access, facilitating interactions with the underlying database for entities such as `User`, `UserProject`, `Task`, and `Project`.
+
+2. **Factory Method Pattern:**
+   - `ProjectFactory.java`, `TaskDtoFactory.java`
+   - Encapsulates the creation of complex objects (`Project` and `TaskDTO`) in a separate factory class, promoting code organization and separation of concerns.
+
+3. **Singleton Pattern:**
+   - `ProjectFactory.java`, `TaskDtoFactory.java`
+   - Utilized in the factory classes (`ProjectFactory` and `TaskDtoFactory`) to ensure a single instance of the factory exists, controlling access to the creation methods and maintaining a global point of access.
+
+4. **Observer Pattern:**
+   - `Task.java`, `Comment.java`
+   - Established implicitly through the bidirectional relationship between `Task` and `Comment`, allowing tasks to be observed for changes in the associated comments. Any changes in comments can be reflected in the task, providing a form of observation.
+
+5. **Strategy Pattern:**
+   - `TaskServiceImpl.java`
+   -  The strategy pattern is not explicitly implemented in the code but can be considered in the `TaskServiceImpl`. The service class encapsulates algorithms for various task operations, providing a strategy for each operation.
+
+6.   **MVC (Model-View-Controller) Pattern:**
+   - packages: `controller`, `service`, `repository`, `model`, `entity`
+   - The MVC pattern is implicitly applied in the task management module. The `Controller` acts as the controller, handling user input and directing it to the `ServiceImpl` for processing. The `DTO` & `Entity` serves as the model, representing the data, and the view is represented by the API endpoints, which return responses to the user.
 
 
 # Induvidual Contributions
 
-| Name                  | Nu ID       | Contributions                                                                                                         
+| Name                  | NU ID       | Contributions                                                                                                         
 |-----------------------|-------------|-----------------------------------------------------------------------------------------------------------------------
-| Aashish Chaple        | #002680570  | Streams, Enums, MVC Design Pattern
+| Aashish Chaple        | #002680570  | Streams, Enums, Strategy Pattern, MVC Design Pattern
 | Akhileshkumar Kumbar  | #002201470  | Lazy Singleton Design Pattern, Enum Singleton Factory Pattern
-| Akshay Bharadwaj      | #002745765  | MVC Design Pattern, Streams
-| Pritesh Nimje         | #002817324  | Repository Pattern, MVC Design Pattern, Streams
+| Akshay Bharadwaj      | #002745765  | Observer Design Pattern, Streams, MVC Design Pattern
+| Pritesh Nimje         | #002817324  | Repository Pattern, Observer Pattern, MVC Design Pattern, Streams
 | Ruchika Shashidhara   | #002245068  | Comparable, Streams, Enum Singleton & Lazy Singleton Factory Pattern
 | Sai Geeta Acharya     | #002627749  | Comparator, Inner Classes, Eager Singleton Factory Pattern
-| Yuchen Zhang          | #002646829  | CSV Files, MVC Design Pattern
+| Yuchen Zhang          | #002646829  | CSV Files, Repository Design Pattern, MVC Design Pattern
 
 # Class Diagram
 
