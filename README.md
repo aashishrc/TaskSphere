@@ -13,12 +13,32 @@ TaskSphere is a collaborative project and task management system inspired by Kan
 
 `ProjectRequest extends ProjectDTO`, `ProjectREpository extends JPARepository`, `BadRequestException extends RuntimeException`
 
-**Polymorphism** In entity models: User, Task, Project etc.
+**Polymorphism** In entity models: User.java, Task.java, Project.java, Token.java, JwtAuthenticationFilter.java etc.
 
 `toString`,
 `equals`,
-`getters`,
-`setters`
+`logout`,
+`compare`,
+`compareTo`,
+`createProject`,
+`commence`,
+`doFilterInternal`
+
+LogoutService.java
+```
+@Override
+    public void logout(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Authentication authentication
+    ) {
+        final String authHeader = request.getHeader("Authorization");
+        final String jwt;
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return;
+        }
+    }
+```
 
 **APIs** Interfaces & Implementations
 `AuthenticationServiceImpl implements AuthenticationService`,
@@ -29,19 +49,55 @@ TaskSphere is a collaborative project and task management system inspired by Kan
 
 **Enums**
 
-`Role`: Admin, Manager, Developer
+`Role` Role.java : Admin, Manager, Developer
 
-`Task Priority`: Lowest, Low, Medium, High, Highest
+`Task Priority` Task Priority.java : Lowest, Low, Medium, High, Highest
+
+**Abstarct methods**
+
+`public abstract ProjectDTO createProjectDto(Integer id, String name, String description);`  ProjectDtoFactory.java
 
 **Lambdas**
 
+TaskServiceImpl.java
+```
+List<TaskDTO> taskDTOList = taskStream
+                .sorted()
+                .map(this::mapToTaskDTO)
+                .collect(Collectors.toList());
+```
+```
+taskStream = taskStream.filter(task -> task.getPriority().equals(priority));
+```
+
 **Inner classes**
 
-**Design Patterns**
+`public static class UserProjectId implements Serializable` - UserProject.java
 
-**Comparators**
+`public static class LastestCommentComparator implements Comparator<Comment>` - Comment,java
 
-**Comparables**
+**Comparators** Comment.java
+
+```
+public static class LastestCommentComparator implements Comparator<Comment> {
+
+        @Override
+        public int compare(Comment o1, Comment o2) {
+            return o2.getCreatedAt().compareTo(o1.getCreatedAt());
+        }
+    }
+```
+
+**Comparables** Task.java
+
+```
+public class Task implements Comparable<Task> {
+    @Override
+    public int compareTo(Task o) {
+        return Integer.compare(this.getPriority().getPriority(), o.getPriority().getPriority());
+    }
+}
+```
 
 **Generics**
 
@@ -55,7 +111,7 @@ TaskSphere is a collaborative project and task management system inspired by Kan
 `ResourceNotFoundException extends RuntimeException`,
 `UnauthorizedException extends RuntimeException`
 
-**CSV file handling** Importing Project from CSV File (Reading CSV Files)
+**CSV file handling** Importing Project from CSV File (Reading CSV Files) - ProjectServiceImpl.java
 ```
 public ResponseEntity<List<ProjectDTO>> importProject(File file) {
         ProjectFactory projectFactory = ProjectFactory.getInstance();
@@ -75,8 +131,21 @@ public ResponseEntity<List<ProjectDTO>> importProject(File file) {
         return ResponseEntity.ok(list);
     }
 ```
+
+**Design Patterns**
+
+
 ## Induvidual Contributions
 
+| Name                  | Nu ID       | Contributions                                                                                                         
+|-----------------------|-------------|-----------------------------------------------------------------------------------------------------------------------
+| Aashish Chaple        | #002680570  | Streams, Enums, MVC Design Pattern
+| Akhileshkumar Kumbar  | #002201470  | Lazy Singleton Design Pattern, Enum Singleton Factory Pattern
+| Akshay Bharadwaj      | #002745765  | MVC Design Pattern, Streams
+| Pritesh Nimje         | #002817324  | Repository Pattern, MVC Design Pattern, Streams
+| Ruchika Shashidhara   | #002245068  | Comparable, Streams, Enum Singleton & Lazy Singleton Factory Pattern
+| Sai Geeta Acharya     | #002627749  | Comparator, Inner Classes, Eager Singleton Factory Pattern
+| Yuchen Zhang          | #002646829  | CSV Files, MVC Design Pattern
 
 ## Class Diagram
 
