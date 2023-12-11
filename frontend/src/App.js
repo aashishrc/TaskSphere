@@ -10,6 +10,7 @@ import Column from "./components/Column";
 import KanbanBoard from "./components/KanbanBoard";
 import Task from "./components/Task";
 import CreateTask from "./components/CreateTask"
+import ProjectDetail from './components/ProjectDetail';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="signup" element={<SignUp />} />
             <Route path="kanbanBoard" element={<KanbanBoard />} />
             <Route path="newTask" element={<CreateTask/>} />
+            <Route path="/projectDetail/:projectId" element={<ProjectDetail />} />
           </Route>
         </Routes>
       </BrowserRouter>

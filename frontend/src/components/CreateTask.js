@@ -6,9 +6,11 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-
 const NewTask = () => {
     const [assignees, setAssignees] = useState([]);
+    const [projectData] = useState({
+        projectId: 1
+    });
 
     const [formData, setFormData] = useState({
         name: "",
@@ -16,7 +18,8 @@ const NewTask = () => {
         deadline: new Date(),
         priority: "",
         status: "",
-        assigneeId: 0
+        assigneeId: 0,
+        projectId: projectData.projectId
     });
 
     const handleChange = (e) => {
@@ -47,8 +50,6 @@ const NewTask = () => {
         }
     };
 
-    console.log(process.env)
-
     useEffect(() => {
         // Function to fetch data from the API
         // const fetchData = async () => {
@@ -67,7 +68,7 @@ const NewTask = () => {
 
         const fetchAssignees = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/projects/1/users`, {
+                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/projects/${projectData.projectId}/users`, {
                     headers: {
                         'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0YXNrc3BoZXJlLmNvbSIsImlhdCI6MTcwMjI4MzU5NCwiZXhwIjoxNzAyMzY5OTk0fQ.QDhgryNB5TmISbDxg3TDOkpCkzcR1C4WD6NmbQrlG18`,
                     },
@@ -147,7 +148,6 @@ const NewTask = () => {
                         <option value="Open">Open</option>
                         <option value="InProgress">InProgress</option>
                         <option value="OnHold">OnHold</option>
-                        <option value="Done">Done</option>
                         <option value="InReview">InReview</option>
                     </Form.Select>
                 </Form.Group>
