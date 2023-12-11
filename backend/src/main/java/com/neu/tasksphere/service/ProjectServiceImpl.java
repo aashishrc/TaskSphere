@@ -14,7 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -33,9 +32,7 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Project", "ID", id));
 
-        ProjectDtoFactory projectDtoFactory = ProjectDtoFactory.getInstance();
-        ProjectDTO projectDTO = projectDtoFactory.createProjectDto(project.getId(), project.getName(), project.getDescription());
-
+        ProjectDTO projectDTO = ProjectDtoFactory.INSTANCE.createProjectDto(project.getId(), project.getName(), project.getDescription());
         return ResponseEntity.ok(projectDTO);
     }
 

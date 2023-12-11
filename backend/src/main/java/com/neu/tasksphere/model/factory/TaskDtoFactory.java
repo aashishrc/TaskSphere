@@ -9,15 +9,12 @@ import java.util.Date;
 
 public class TaskDtoFactory {
 
-    private static TaskDtoFactory instance = null;
+    private static final TaskDtoFactory instance = new TaskDtoFactory();
     private TaskDtoFactory(){
 
     }
 
     public static synchronized TaskDtoFactory getInstance(){
-        if(instance == null){
-            instance = new TaskDtoFactory();
-        }
         return instance;
     }
 
