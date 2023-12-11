@@ -14,7 +14,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,5 +101,48 @@ public class ProjectServiceImpl implements ProjectService {
         projectRepository.delete(project);
 
         return ResponseEntity.ok(new ApiResponse(Boolean.TRUE, "Project deleted successfully"));
+    }
+
+    @Override
+    public ResponseEntity<List<ProjectDTO>> exportProject() {
+        List<Project> projects = projectRepository.findAll();
+        List<ProjectDTO> list = new ArrayList<>();
+        try (FileWriter fw = new FileWriter("src/data/project.csv"); BufferedWriter bw = new BufferedWriter(fw)) {
+            for (Project p: projects) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(p.getId()).append(",");
+                sb.append(p.getName()).append(",");
+                sb.append(p.getDescription()).append(",");
+                sb.append(p.getCreatedAt());
+                bw.write(sb.toString());
+                bw.newLine();
+
+                list.add(new ProjectDTO(p.getId(), p.getName(), p.getDescription()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.ok(list);
+
+    }
+
+    @Override
+    public ResponseEntity<List<ProjectDTO>> importProject(File file) {
+        ProjectFactory projectFactory = ProjectFactory.getInstance();
+        List<ProjectDTO> list = new ArrayList<>();
+        try (FileReader fr = new FileReader(file); BufferedReader br = new BufferedReader(fr)) {
+            String inputLine = null;
+            while ((inputLine = br.readLine()) != null) {
+                String[] fields = inputLine.split(",");
+                Project project = projectFactory.createProject(fields[0], fields[1]);
+                projectRepository.save(project);
+                list.add(new ProjectDTO(project.getId(), project.getName(), project.getDescription()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.ok(list);
     }
 }
