@@ -54,6 +54,7 @@ public class UserProjectServiceImpl implements UserProjectService {
                 .map((userProject) -> {
                     User user = userProject.getUser();
                     UserDTO userDTO = new UserDTO();
+                    userDTO.setId(user.getId());
                     userDTO.setUsername(user.getUsername());
                     userDTO.setFirstname(user.getFirstname());
                     userDTO.setLastname(user.getLastname());

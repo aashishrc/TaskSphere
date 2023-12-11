@@ -87,7 +87,6 @@ public class TaskServiceImpl implements TaskService {
 
     public ResponseEntity<TaskDTO> createTask(TaskRequest request) {
 
-
         Task task = new Task(
                 request.getName(),
                 request.getDescription(),

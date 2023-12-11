@@ -3,9 +3,6 @@ spring:
     url: jdbc:postgresql://tasksphere.c15gunhdudxb.us-east-2.rds.amazonaws.com:5432/TaskSphere
     username: postgres
     password: password
-#    url: jdbc:postgresql://localhost:5432/TaskSphere
-#    username: admin
-#    password: admin@123
     dbcp2:
       test-while-idle: true
       validation-query: select 1
