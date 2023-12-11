@@ -36,7 +36,8 @@ const TaskList = () => {
       if (Array.isArray(projects)) {
         // Map the projectsData to the format expected by AgGridReact
         const formattedData = projects.map(project => ({
-          column1: project.name
+          column1: project.name,
+          column2: project.id
         }));
 
         setRowData(formattedData);
@@ -54,9 +55,10 @@ const TaskList = () => {
   const handleRowClick = (event) => {
     // Access the data for the clicked row using event.data
     const clickedRowData = event.data;
+    console.log(clickedRowData)
     
     return (
-      alert("the project clicked is : ", clickedRowData )
+      alert(`the id of project clicked is : ${clickedRowData['column2']}` )
     )
   };
 
