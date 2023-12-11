@@ -15,7 +15,6 @@ const Home = () => {
   }
 
   const display = () => {
-    console.log(displayComponent);
     switch (displayComponent) {
       case "ActivityLog":
         return <ActivityLog />

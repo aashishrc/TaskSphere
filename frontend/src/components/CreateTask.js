@@ -1,35 +1,12 @@
 import React, { useState , useEffect} from 'react'
 import '../styles/css/CreateTask.css'
 import Form from 'react-bootstrap/Form';
-import 'react-datepicker/dist/react-datepicker.css';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 
 const NewTask = () =>{
     const [date, setDate] = useState();
     const [data, setData] = useState([]);
-
-    useEffect(() => {
-        // Function to fetch data from the API
-        const fetchData = async () => {
-          try {
-            const response = await axios.get('http://localhost:8080/api/v1/projects?page=0&size=5', {
-                headers: {
-                    'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0YXNrc3BoZXJlLmNvbSIsImlhdCI6MTcwMjI2MzEzOSwiZXhwIjoxNzAyMzQ5NTM5fQ.pywRzp3DiTErzwDFnGQRFQvxJrPFBQYzTukXnhHnVSc`,
-                  },
-            });
-            
-            setData(response.data);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        };
-    
-        // Call the fetchData function
-        fetchData();
-      }, []);
-
-      console.log(data);
 
     return(
         <div className='formBackground'>
@@ -38,7 +15,7 @@ const NewTask = () =>{
                     <Form.Label>Project</Form.Label>
                     <Form.Select aria-label="Default select example">
                         <option>Select Project</option>
-                        <option value="1">One</option>
+                        <option value="1"></option>
                         <option value="2">Two</option>
                         <option value="3">Three</option>
                     </Form.Select>
