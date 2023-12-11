@@ -31,8 +31,8 @@ const LeftNavigation = ({ onButtonClick }) => {
   return (
     <Nav className="flex-column vertical-navbar">
       <Container className="profile-container">
-        <div>Proifle: {userProfile.username}</div>
-        <div>Name: {userProfile.firstname} {userProfile.lastname}</div>
+        <div>Profile: {userProfile.username}</div>
+        <div>Hello, {userProfile.lastname} {userProfile.firstname}</div>
       </Container>
       <hr />
       <TaskList />
