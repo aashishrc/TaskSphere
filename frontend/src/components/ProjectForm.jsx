@@ -45,14 +45,13 @@ const ProjectForm = () => {
   
           if (response.ok) {
             console.log('File uploaded successfully!');
-            // You can handle success logic here.
           } else {
             console.error('Failed to upload file:', response.statusText);
-            // You can handle error logic here.
+            alert('File Upload failed !');
           }
         } catch (error) {
           console.error('Error uploading file:', error.message);
-          // You can handle error logic here.
+          
         }
       }else{
     // Send registration data to the backend
