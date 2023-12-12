@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/css/LeftNavbar.css";
 import { Nav, Container, Button } from "react-bootstrap";
 import TaskList from "./TaskList";
-import axios from 'axios';
+import axios from "axios";
 const jwtToken = localStorage.getItem("jwtToken");
 
 const LeftNavigation = ({ onButtonClick }) => {
@@ -32,13 +32,19 @@ const LeftNavigation = ({ onButtonClick }) => {
   return (
     <Nav className="flex-column vertical-navbar">
       <Container className="profile-container">
-        <div>Profile: {userProfile.username}</div>
-        <div>Hello, {userProfile.lastname} {userProfile.firstname}</div>
+        <h5>
+          Hello, {userProfile.lastname} {userProfile.firstname}
+        </h5>
+        <h6>Profile: {userProfile.username}</h6>
+        <h6>Role: {userProfile.role}</h6>
       </Container>
       <hr />
-      <TaskList />
+      <TaskList
+        selectedRowId={selectedRowId}
+        onRowClick={() => onButtonClick("Project")}
+      />
       <hr />
-      <Button onClick={() => onButtonClick("viewAlltasks")}>View All tasks</Button>
+      <Button onClick={() => onButtonClick("AllTasks")}>View All tasks</Button>
       <hr />
       <Button onClick={() => onButtonClick("CreateTask")}>
         Create New Task

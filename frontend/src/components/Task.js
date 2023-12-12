@@ -20,7 +20,9 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const TextContent = styled.div``;
+const TextContent = styled.div`
+  display: flex;
+`;
 
 const Icons = styled.div`
   display: flex;
@@ -36,7 +38,6 @@ function bgcolorChange(props) {
         ? "#DCDCDC"
         : "#EAF4FC";
 }
-
 
 export default function Task({ task, index }) {
   const navigate = useNavigate();
@@ -65,9 +66,15 @@ export default function Task({ task, index }) {
             </span>
           </div>
           <div
-            style={{ display: "flex", justifyContent: "center", padding: 2 }}
+            style={{
+              display: "flex",
+
+              justifyContent: "center",
+              padding: 2,
+            }}
           >
-            <TextContent>{task.title}</TextContent>
+            <TextContent>{task.name}</TextContent>
+            {/* <TextContent>{task.description}</TextContent> */}
           </div>
           <Icons>
             <div>

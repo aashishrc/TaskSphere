@@ -8,7 +8,7 @@ const Container = styled.div`
   background-color: #f4f5f7;
   border-radius: 2.5px;
   width: 300px;
-  height: 475px;
+  height: 65vh;
   overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -24,19 +24,21 @@ const Title = styled.h3`
 const TaskList = styled.div`
   padding: 3px;
   transition: background-color 0.2s ease;
-  background-color: ${(props) => (props.isDraggingOver ? 'lightblue' : '#f4f5f7')};
+  background-color: ${(props) => (props.isDraggingOver ? "blue" : "#f4f5f7")};
   flex-grow: 1;
   min-height: 100px;
 `;
 
 export default function Column({ title, tasks, id }) {
-  const columnTasks = tasks || [];
+  const columnTasks = tasks || [{}];
+  console.log(columnTasks);
 
   return (
     <Container className="column">
       <Title
         style={{
-          backgroundColor: "lightblue",
+          backgroundColor: "black",
+          color: "white",
           position: "sticky",
           top: 0,
         }}
@@ -50,10 +52,9 @@ export default function Column({ title, tasks, id }) {
             {...provided.droppableProps}
             isDraggingOver={snapshot.isDraggingOver}
           >
-            
             {columnTasks.map((task, index) => (
               <Task
-                key={task.id}  // Use task ID as the key
+                key={task.id} // Use task ID as the key
                 index={index}
                 task={task}
                 isDraggable={true}
