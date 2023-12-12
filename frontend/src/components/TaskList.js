@@ -8,7 +8,7 @@ import { Container } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const TaskList = () => {
+const TaskList = ({ selectedRowId, onRowClick }) => {
   // Row Data: The data to be displayed.
   const [rowData, setRowData] = useState([]);
   const navigate = useNavigate();
@@ -53,13 +53,13 @@ const TaskList = () => {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, []);
 
   const handleRowClick = (event) => {
     const projectId = event.data.column2;
-    navigate(`/projectDetail/${projectId}`);
+    selectedRowId(projectId);
+    onRowClick();
   };
 
   return (

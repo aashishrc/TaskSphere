@@ -19,7 +19,9 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const TextContent = styled.div``;
+const TextContent = styled.div`
+  display: flex;
+`;
 
 const Icons = styled.div`
   display: flex;
@@ -36,18 +38,16 @@ function bgcolorChange(props) {
     : "#EAF4FC";
 }
 
-
 export default function Task({ task, index }) {
   return (
     <Draggable draggableId={`${task.id}`} key={task.id} index={index}>
       {(provided, snapshot) => (
         <Container
-  {...provided.draggableProps}
-  {...provided.dragHandleProps}
-  ref={provided.innerRef}
-  isDragging={snapshot.isDragging} // Update property name
->
-
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+          isDragging={snapshot.isDragging} // Update property name
+        >
           <div style={{ display: "flex", justifyContent: "start", padding: 2 }}>
             <span>
               <small>
@@ -57,9 +57,15 @@ export default function Task({ task, index }) {
             </span>
           </div>
           <div
-            style={{ display: "flex", justifyContent: "center", padding: 2 }}
+            style={{
+              display: "flex",
+
+              justifyContent: "center",
+              padding: 2,
+            }}
           >
-            <TextContent>{task.title}</TextContent>
+            <TextContent>{task.name}</TextContent>
+            {/* <TextContent>{task.description}</TextContent> */}
           </div>
           <Icons>
             <div>
@@ -70,9 +76,8 @@ export default function Task({ task, index }) {
             </div>
           </Icons>
           {provided.placeholder ? (
-  <div ref={provided.placeholder} style={{ visibility: 'hidden' }} />
-) : null}
-
+            <div ref={provided.placeholder} style={{ visibility: "hidden" }} />
+          ) : null}
         </Container>
       )}
     </Draggable>

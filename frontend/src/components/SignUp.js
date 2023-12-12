@@ -11,7 +11,7 @@ const SignUp = () => {
     password: "",
     firstname: "",
     lastname: "",
-    role: "Admin",
+    role: "",
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -117,6 +117,8 @@ const SignUp = () => {
                         <option value="Admin">Admin</option>
                         <option value="Manager">Manager</option>
                         <option value="Developer">Developer</option>
+                        <option value="TechLead">Technical Lead</option>
+                        <option value="Tester">Tester</option>
                       </Form.Select>
                     </Form.Group>
                   </Col>
