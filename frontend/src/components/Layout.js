@@ -19,7 +19,7 @@ const Layout = () => {
     <>
       <Navbar bg="black" data-bs-theme="dark">
         <Container fluid>
-          <Navbar.Brand href="/">TrackSphere</Navbar.Brand>
+          <Navbar.Brand href="/">TaskSphere</Navbar.Brand>
 
           <Nav className="ml-auto">
             {/* <Nav.Link href="/login">Login</Nav.Link> */}

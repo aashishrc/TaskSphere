@@ -2,6 +2,7 @@ import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { Avatar, Image } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   border-radius: 10px;
@@ -19,7 +20,9 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const TextContent = styled.div``;
+const TextContent = styled.div`
+  display: flex;
+`;
 
 const Icons = styled.div`
   display: flex;
@@ -30,23 +33,29 @@ function bgcolorChange(props) {
   return props.isDragging
     ? "lightgreen"
     : props.isDone
-    ? "#F2D7D5"
-    : props.isDraggable
-    ? "#DCDCDC"
-    : "#EAF4FC";
+      ? "#F2D7D5"
+      : props.isDraggable
+        ? "#DCDCDC"
+        : "#EAF4FC";
 }
 
-
 export default function Task({ task, index }) {
+  const navigate = useNavigate();
+
+  const handleTaskClick = () => {
+    navigate(`/assignTask/${task.id}`);
+  };
+
   return (
     <Draggable draggableId={`${task.id}`} key={task.id} index={index}>
       {(provided, snapshot) => (
         <Container
-  {...provided.draggableProps}
-  {...provided.dragHandleProps}
-  ref={provided.innerRef}
-  isDragging={snapshot.isDragging} // Update property name
->
+          onClick={handleTaskClick}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+          isDragging={snapshot.isDragging} // Update property name
+        >
 
           <div style={{ display: "flex", justifyContent: "start", padding: 2 }}>
             <span>
@@ -57,9 +66,15 @@ export default function Task({ task, index }) {
             </span>
           </div>
           <div
-            style={{ display: "flex", justifyContent: "center", padding: 2 }}
+            style={{
+              display: "flex",
+
+              justifyContent: "center",
+              padding: 2,
+            }}
           >
-            <TextContent>{task.title}</TextContent>
+            <TextContent>{task.name}</TextContent>
+            {/* <TextContent>{task.description}</TextContent> */}
           </div>
           <Icons>
             <div>
@@ -70,8 +85,8 @@ export default function Task({ task, index }) {
             </div>
           </Icons>
           {provided.placeholder ? (
-  <div ref={provided.placeholder} style={{ visibility: 'hidden' }} />
-) : null}
+            <div ref={provided.placeholder} style={{ visibility: 'hidden' }} />
+          ) : null}
 
         </Container>
       )}

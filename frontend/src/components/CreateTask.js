@@ -34,7 +34,7 @@ const NewTask = ({ onButtonClick }) => {
         const fetchData = async () => {
           try {
             const response = await axios.get(
-                `${process.env.REACT_APP_API_BASE_URL}/api/v1/projects/export`,
+                `${process.env.REACT_APP_API_BASE_URL}/api/v1/projects?page=0&size=50`,
               {
                 headers: {
                   Authorization: `Bearer ${jwtToken}`,
@@ -42,7 +42,7 @@ const NewTask = ({ onButtonClick }) => {
               }
             );
     
-            const projects = response.data;
+            const projects = response.data.data;
             
             setProjectData(projects)
             console.log(projects)
@@ -53,6 +53,7 @@ const NewTask = ({ onButtonClick }) => {
         };
     
         fetchData();
+        console.log(projectData)
       }, []);
 
     const handleChange = (e) => {
@@ -101,7 +102,8 @@ const NewTask = ({ onButtonClick }) => {
         };
 
         fetchAssignees();
-    }, []);
+        console.log(assignees)
+    }, [formData.projectId]);
 
     return (
         <div className='formBackground'>

@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import "../styles/css/LeftNavbar.css";
 import { Nav, Container, Button } from "react-bootstrap";
 import TaskList from "./TaskList";
-import axios from 'axios';
+import axios from "axios";
 const jwtToken = localStorage.getItem("jwtToken");
 
 const LeftNavigation = ({ onButtonClick }) => {
   const userRole = localStorage.getItem('user_role');
   const userName = localStorage.getItem('user_name');
-  const isUserAdminOrManager = userRole === 'Admin' || 'Manager';
+  const isUserAdminOrManager = userRole === 'Admin' || userRole ===  'Manager';
   const [userProfile, setUserProfile] = useState({});
 
   useEffect(() => {
@@ -32,17 +32,25 @@ const LeftNavigation = ({ onButtonClick }) => {
   return (
     <Nav className="flex-column vertical-navbar">
       <Container className="profile-container">
-        <div>Profile: {userProfile.username}</div>
-        <div>Hello, {userProfile.lastname} {userProfile.firstname}</div>
+        <h5>
+          Hello, {userProfile.lastname} {userProfile.firstname}
+        </h5>
+        <h6>Profile: {userProfile.username}</h6>
+        <h6>Role: {userProfile.role}</h6>
       </Container>
       <hr />
-      <TaskList />
+      <TaskList
+        onRowClick={() => onButtonClick("Project")}
+      />
       <hr />
-      <Button onClick={() => onButtonClick("viewAlltasks")}>View All tasks</Button>
+      <Button onClick={() => onButtonClick("AllTasks")}>View All tasks</Button>
       <hr />
-      <Button onClick={() => onButtonClick("CreateTask")}>
+      {
+        isUserAdminOrManager &&
+        <Button onClick={() => onButtonClick("CreateTask")}>
         Create New Task
       </Button>
+      }
       <hr />
       {isUserAdminOrManager &&
         <Button onClick={() => onButtonClick("CreateProject")}>Create New Project</Button>}
