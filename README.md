@@ -3,15 +3,15 @@
 TaskSphere is a collaborative project and task management system inspired by Kanban principles. It offers a visual  board for streamlined project organization, allowing users to create, assign, and track tasks effectively. With features such as detailed task management, real-time progress monitoring, and user assignments, TaskSphere facilitates seamless collaboration. Authentication is handled through JWT tokens, ensuring secure user access. The system also supports export/import functionalities for efficient project management. TaskSphere aims to enhance team coordination and project success with its user-friendly interface and robust features.
 
 # Index
-1. [Introduction]()
-2. [Tech Stack]()
-3. [Flows]()
-4. [Concepts Used]()
-5. [Individual Contributions]()
-6. [Class Diagram]()
-7. [Steps to Setup Backend]()
-8. [Steps to Setup Frontend]()
-9. [Swagger Documentation]()
+1. [Introduction](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19#tasksphere)
+2. [Tech Stack](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19#tech-stack)
+3. [Flows](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19#flows)
+4. [Concepts Used](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19#concepts-used-few-examples)
+5. [Individual Contributions](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19#induvidual-contributions)
+6. [Class Diagram](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19#class-diagram)
+7. [Steps to Setup Backend](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19#steps-to-setup-backend)
+8. [Steps to Setup Frontend](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19#steps-to-setup-frontend)
+9. [Swagger Documentation](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19#swagger-documentation)
 
 # Tech Stack
 
@@ -42,20 +42,24 @@ The Task Flow is handled by `TaskController`, including endpoints for tasks like
 
 **Inheritance**
 
-`ProjectRequest extends ProjectDTO`, `ProjectREpository extends JPARepository`, `BadRequestException extends RuntimeException`
+[`ProjectRequest extends ProjectDTO`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/model/payload/request/ProjectRequest.java#L5), 
+
+[`ProjectRepository extends JPARepository`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/repository/ProjectRepository.java#L8), 
+
+[`BadRequestException extends RuntimeException`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/exception/BadRequestException.java#L8)
 
 **Polymorphism** In entity models: User.java, Task.java, Project.java, Token.java, JwtAuthenticationFilter.java etc.
 
-`toString`,
-`equals`,
-`logout`,
-`compare`,
-`compareTo`,
-`createProject`,
-`commence`,
-`doFilterInternal`
+[`toString`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/entity/Project.java#L85),
+[`equals`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/entity/Project.java#L77),
+[`logout`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/service/LogoutService.java#L23),
+[`compare`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/entity/Comment.java#L87),
+[`compareTo`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/entity/Task.java#L153),
+[`createProject`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/entity/factory/UserProjectFactory.java#L21),
+[`commence`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/exception/DelegatedAuthEntryPoint.java#L25),
+[`doFilterInternal`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/config/jwt/JwtAuthenticationFilter.java#L30)
 
-LogoutService.java
+[LogoutService.java](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/service/LogoutService.java#L23)
 ```
 @Override
     public void logout(
@@ -72,25 +76,30 @@ LogoutService.java
 ```
 
 **APIs** Interfaces & Implementations
-`AuthenticationServiceImpl implements AuthenticationService`,
-`UserServiceImpl implements UserService`,
-`UserProjectServiceImpl implements UserProjectService`,
-`ProjectServiceImpl implements ProjectService`,
-`TaskServiceImpl implements TaskService`
+
+[`AuthenticationServiceImpl implements AuthenticationService`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/service/AuthenticationServiceImpl.java#L18),
+
+[`UserServiceImpl implements UserService`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/service/UserServiceImpl.java#L28),
+
+[`UserProjectServiceImpl implements UserProjectService`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/service/UserProjectServiceImpl.java#L21),
+
+[`ProjectServiceImpl implements ProjectService`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/service/ProjectServiceImpl.java#L26),
+
+[`TaskServiceImpl implements TaskService`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/service/TaskServiceImpl.java)
 
 **Enums**
 
-`Role` Role.java : Admin, Manager, Developer
+`Role` [Role.java]() : Admin, Manager, Developer
 
-`Task Priority` Task Priority.java : Lowest, Low, Medium, High, Highest
+`Task Priority` [Task Priority.java]() : Lowest, Low, Medium, High, Highest
 
 **Abstarct methods**
 
-`public abstract ProjectDTO createProjectDto(Integer id, String name, String description);`  ProjectDtoFactory.java
+`public abstract ProjectDTO createProjectDto(Integer id, String name, String description);`  [ProjectDtoFactory.java](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/model/factory/ProjectDtoFactory.java#L14)
 
 **Lambdas**
 
-TaskServiceImpl.java
+[TaskServiceImpl.java](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/service/TaskServiceImpl.java#L32)
 ```
 List<TaskDTO> taskDTOList = taskStream
                 .sorted()
@@ -103,11 +112,11 @@ taskStream = taskStream.filter(task -> task.getPriority().equals(priority));
 
 **Inner classes**
 
-`public static class UserProjectId implements Serializable` - UserProject.java
+`public static class UserProjectId implements Serializable` - [UserProject.java](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/entity/UserProject.java#L54)
 
-`public static class LastestCommentComparator implements Comparator<Comment>` - Comment,java
+`public static class LastestCommentComparator implements Comparator<Comment>` - [Comment.java](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/entity/Comment.java#L84)
 
-**Comparators** Comment.java
+**Comparators** [Comment.java](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/entity/Comment.java#L84)
 
 ```
 public static class LastestCommentComparator implements Comparator<Comment> {
@@ -119,7 +128,7 @@ public static class LastestCommentComparator implements Comparator<Comment> {
     }
 ```
 
-**Comparables** Task.java
+**Comparables** [Task.java](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/entity/Task.java#L153)
 
 ```
 public class Task implements Comparable<Task> {
@@ -132,17 +141,21 @@ public class Task implements Comparable<Task> {
 
 **Generics**
 
-`TaskRepository extends JpaRepository<Task, Integer>`,
-`ResponseEntity<TaskDTO>`,
-`ResponseEntity<APIResponse>`
+[`TaskRepository extends JpaRepository<Task, Integer>`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/repository/TaskRepository.java#L11),
+
+[`ResponseEntity<TaskDTO>`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/service/TaskServiceImpl.java#L44),
+
+[`ResponseEntity<APIResponse>`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/controller/ProjectController.java#L62)
 
 **Exception Handling**
 
-`BadRequestException extends RuntimeException`,
-`ResourceNotFoundException extends RuntimeException`,
-`UnauthorizedException extends RuntimeException`
+[`BadRequestException extends RuntimeException`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/exception/BadRequestException.java#L8),
 
-**CSV file handling** Importing Project from CSV File (Reading CSV Files) - ProjectServiceImpl.java
+[`ResourceNotFoundException extends RuntimeException`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/exception/ResourceNotFoundException.java#L8),
+
+[`UnauthorizedException extends RuntimeException`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/exception/UnauthorizedException.java#L8)
+
+**CSV file handling** Importing Project from CSV File (Reading CSV Files) - [ProjectServiceImpl.java](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/service/ProjectServiceImpl.java#L148)
 ```
 public ResponseEntity<List<ProjectDTO>> importProject(File file) {
         ProjectFactory projectFactory = ProjectFactory.getInstance();
@@ -163,26 +176,45 @@ public ResponseEntity<List<ProjectDTO>> importProject(File file) {
     }
 ```
 
+**String Builder** [ProjectServiceImpl.java](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/service/ProjectServiceImpl.java#L129)
+```
+for (Project p : projects) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(p.getId()).append(",");
+                sb.append(p.getName()).append(",");
+                sb.append(p.getDescription()).append(",");
+                sb.append(p.getCreatedAt());
+                bw.write(sb.toString());
+                bw.newLine();
+
+                list.add(new ProjectDTO(p.getId(), p.getName(), p.getDescription()));
+            }
+```
+
 ## Design Patterns
 
 1. **Repository Pattern:**
-   - `UserRepository.java`, `UserProjectRepository.java`, `TaskRepository.java`, `ProjectRepository.java`
+   - [`UserRepository.java`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/repository/UserRepository.java), [`TaskRepository.java`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/repository/TaskRepository.java)
    - Provides a consistent and abstracted interface for data access, facilitating interactions with the underlying database for entities such as `User`, `UserProject`, `Task`, and `Project`.
 
 2. **Factory Method Pattern:**
-   - `ProjectFactory.java`, `TaskDtoFactory.java`
-   - Encapsulates the creation of complex objects (`Project` and `TaskDTO`) in a separate factory class, promoting code organization and separation of concerns.
+   - Eager Singleton Factory [`ProjectFactory.java`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/entity/factory/ProjectFactory.java),
+   - Lazy Singleton Factory [`UserProjectFactory.java`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/entity/factory/UserProjectFactory.java),
+   - Enum Singleton Factory [`ProjectDtoFactory.java`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/model/factory/ProjectDtoFactory.java)
+   - Encapsulates the creation of complex objects (`Project`, `ProjectDTO`) in a separate factory class, promoting code organization and separation of concerns.
 
 3. **Singleton Pattern:**
-   - `ProjectFactory.java`, `TaskDtoFactory.java`
-   - Utilized in the factory classes (`ProjectFactory` and `TaskDtoFactory`) to ensure a single instance of the factory exists, controlling access to the creation methods and maintaining a global point of access.
+   - Eager Singleton Factory [`ProjectFactory.java`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/entity/factory/ProjectFactory.java),
+   - Lazy Singleton Factory [`UserProjectFactory.java`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/entity/factory/UserProjectFactory.java),
+   - Enum Singleton Factory [`ProjectDtoFactory.java`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/model/factory/ProjectDtoFactory.java)
+   - Utilized in the factory classes to ensure a single instance of the factory exists, controlling access to the creation methods and maintaining a global point of access.
 
 4. **Observer Pattern:**
-   - `Task.java`, `Comment.java`
+   - [`Task.java`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/entity/Task.java), [`Comment.java`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/controller/TaskController.java)
    - Established implicitly through the bidirectional relationship between `Task` and `Comment`, allowing tasks to be observed for changes in the associated comments. Any changes in comments can be reflected in the task, providing a form of observation.
 
 5. **Strategy Pattern:**
-   - `TaskServiceImpl.java`
+   - [`TaskServiceImpl.java`](https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19/blob/main/backend/src/main/java/com/neu/tasksphere/service/TaskServiceImpl.java)
    -  The strategy pattern is not explicitly implemented in the code but can be considered in the `TaskServiceImpl`. The service class encapsulates algorithms for various task operations, providing a strategy for each operation.
 
 6.   **MVC (Model-View-Controller) Pattern:**
