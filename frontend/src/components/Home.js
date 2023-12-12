@@ -42,8 +42,11 @@ const Home = () => {
       case "CreateTask":
         return <NewTask />;
       case "AllTasks":
-        return <KanbanBoard data={allTasks} />;
+        return allTasks && allTasks.length > 0 ? (
+          <KanbanBoard data={allTasks} />
+        ) : null;
       default:
+        // return <KanbanBoard data={allTasks} />;
         return null;
     }
   };
