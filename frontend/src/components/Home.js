@@ -21,13 +21,13 @@ const Home = () => {
       case "ActivityLog":
         return <ActivityLog />;
       case "CreateTask":
-        return <NewTask />;
+        return <NewTask onButtonClick={handleDisplayComponent}/>;
       case "CreateProject":
         return <ProjectForm />;
         case "viewAlltasks":
           return <KanbanBoard />;
-      default:
-        return null;
+      default :
+        return <KanbanBoard />;
     }
   };
 
