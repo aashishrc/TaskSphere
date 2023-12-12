@@ -12,6 +12,7 @@ import Task from "./components/Task";
 import CreateTask from "./components/CreateTask";
 import ProjectDetail from "./components/ProjectDetail";
 import { Navigate } from "react-router-dom";
+import AssignProject from "./components/AssignProject";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -26,7 +27,6 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index="home" element={<Home />} />
             <Route path="login" element={<Login />} />
-
             <Route path="newTask" element={<CreateTask />} />
             <Route
               path="/projectDetail/:projectId"

@@ -1,14 +1,28 @@
 package com.neu.tasksphere.service;
 
+import com.neu.tasksphere.entity.Comment;
+import com.neu.tasksphere.entity.Task;
 import com.neu.tasksphere.entity.User;
+import com.neu.tasksphere.entity.enums.TaskPriority;
+import com.neu.tasksphere.entity.enums.TaskStatus;
 import com.neu.tasksphere.exception.ResourceNotFoundException;
+import com.neu.tasksphere.model.CommentDTO;
+import com.neu.tasksphere.model.TaskDTO;
 import com.neu.tasksphere.model.UserDTO;
 import com.neu.tasksphere.model.factory.UserDtoFactory;
 import com.neu.tasksphere.model.payload.request.UserRequest;
 import com.neu.tasksphere.model.payload.response.ApiResponse;
+import com.neu.tasksphere.model.payload.response.PagedResponse;
 import com.neu.tasksphere.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -60,5 +74,25 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         return ResponseEntity.ok(new ApiResponse(Boolean.TRUE, "User role changed successfully"));
+    }
+
+    public ResponseEntity<List<UserDTO>> getAllUsers(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<User> users = userRepository.findAll(pageable);
+
+        List<UserDTO> userDTOList = users.stream()
+                .map(this::mapToUserDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(userDTOList);
+    }
+
+    private UserDTO mapToUserDTO(User user) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setUsername(user.getUsername());
+        userDTO.setFirstname(user.getFirstname());
+        userDTO.setLastname(user.getLastname());
+        return userDTO;
     }
 }

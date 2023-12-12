@@ -8,6 +8,7 @@ import NewTask from "./CreateTask";
 import { ColumnGroup, Component } from "ag-grid-community";
 import ProjectForm from "./ProjectForm";
 import KanbanBoard from "./KanbanBoard";
+import AssignProject from "./AssignProject";
 
 const Home = () => {
   const [displayComponent, setDisplayComponent] = useState(null);
@@ -24,8 +25,10 @@ const Home = () => {
         return <NewTask />;
       case "CreateProject":
         return <ProjectForm />;
-        case "viewAlltasks":
-          return <KanbanBoard />;
+      case "viewAlltasks":
+        return <KanbanBoard />;
+      case "AssignProject":
+        return <AssignProject />;
       default:
         return null;
     }
