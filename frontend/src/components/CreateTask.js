@@ -7,11 +7,12 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 const jwtToken = localStorage.getItem("jwtToken");
 
-const NewTask = () => {
+const NewTask = ({ onButtonClick }) => {
+    const [showComponent, setShowComponent] = useState(true);
     const [assignees, setAssignees] = useState([]);
-    const [projectData] = useState({
-        projectId: 1
-    });
+    const [projectData,setProjectData] = useState([
+        { id: 1, name: 'Test Project 1', description: 'Test Project 1' }
+    ]);
 
     const [formData, setFormData] = useState({
         name: "",
@@ -20,8 +21,39 @@ const NewTask = () => {
         priority: "",
         status: "",
         assigneeId: 0,
-        projectId: projectData.projectId
+        projectId: ""
     });
+
+    const handleCancelClick = () => {
+        // Update state to hide the component
+        setShowComponent(false);
+      };
+
+    useEffect(() => {
+        // Function to fetch data from the API
+        const fetchData = async () => {
+          try {
+            const response = await axios.get(
+                `${process.env.REACT_APP_API_BASE_URL}/api/v1/projects/export`,
+              {
+                headers: {
+                  Authorization: `Bearer ${jwtToken}`,
+                },
+              }
+            );
+    
+            const projects = response.data;
+            
+            setProjectData(projects)
+            console.log(projects)
+        
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        };
+    
+        fetchData();
+      }, []);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -54,7 +86,10 @@ const NewTask = () => {
     useEffect(() => {
         const fetchAssignees = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/projects/${projectData.projectId}/users`, {
+                if(!formData.projectId){
+                    formData.projectId = 1;
+                }
+                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/projects/${formData.projectId}/users`, {
                     headers: {
                         'Authorization': `Bearer ${jwtToken}`,
                     },
@@ -71,6 +106,22 @@ const NewTask = () => {
     return (
         <div className='formBackground'>
             <Form onSubmit={handleSubmit}>
+
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Select Project</Form.Label>
+                    <Form.Select aria-label="Project Name"
+                        name='projectId'
+                        value={formData.projectId}
+                        onChange={handleChange}>
+                        <option>Select Project</option>
+                        {projectData.map((project) => (
+                            <option key={project.id} value={project.id}>
+                            {`${project.name} - ${project.id}`}
+                            </option>
+                        ))}
+                    </Form.Select>
+                </Form.Group>
+
                 <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Task Name</Form.Label>
                     <Form.Control type='text'
@@ -139,7 +190,7 @@ const NewTask = () => {
 
                 <div className='Buttons'>
                     <Button variant='primary btn-lg' type='submit'>Assign</Button>
-                    <Button variant='danger btn-lg' type='reset'>Cancel</Button>
+                    <Button variant='danger btn-lg' type='reset' onClick={() => onButtonClick("viewAlltasks")}>Cancel</Button>
                 </div>
             </Form>
         </div>

@@ -7,6 +7,7 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 import { Container } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const jwtToken = localStorage.getItem("jwtToken");
 
 const TaskList = () => {
   // Row Data: The data to be displayed.
@@ -24,16 +25,15 @@ const TaskList = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/v1/projects?page=0&size=5",
+          `${process.env.REACT_APP_API_BASE_URL}/api/v1/projects/export`,
           {
             headers: {
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0YXNrc3BoZXJlIiwiaWF0IjoxNzAyMjk0MTMwLCJleHAiOjE3MDIzODA1MzB9.W10F141q_WlPVTpmxWUt-cyHqCiYY_dFQqC4NnqBHio`,
+              Authorization: `Bearer ${jwtToken}`,
             },
           }
         );
 
-        const responseData = response.data;
-        const projects = responseData?.data;
+        const projects = response.data;
 
         if (Array.isArray(projects)) {
           // Map the projectsData to the format expected by AgGridReact
