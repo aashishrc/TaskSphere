@@ -75,7 +75,7 @@ public class ProjectController {
     }
 
     @PostMapping("/import")
-    public ResponseEntity<List<ProjectDTO>> importProject(@RequestParam("file") File file) {
-        return projectService.importProject(file);
+    public ResponseEntity<List<ProjectDTO>> importProject(@RequestParam("file") MultipartFile multipartFile) {
+        return projectService.importProject(multipartFile);
     }
 }
