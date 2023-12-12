@@ -8,14 +8,10 @@ import NewTask from "./CreateTask";
 import KanbanBoard from "./KanbanBoard";
 import axios from "axios";
 import { ColumnGroup, Component } from "ag-grid-community";
-<<<<<<< HEAD
 import ProjectForm from "./ProjectForm";
-import KanbanBoard from "./KanbanBoard";
 import AssignProject from "./AssignProject";
-=======
 const baseUrl = process.env.REACT_APP_API_BASE_URL;
 const jwtToken = localStorage.getItem("jwtToken");
->>>>>>> feature_KanbanAkhil
 
 const Home = () => {
   const [displayComponent, setDisplayComponent] = useState(null);
@@ -46,7 +42,6 @@ const Home = () => {
       case "ActivityLog":
         return <ActivityLog />;
       case "CreateTask":
-<<<<<<< HEAD
         return <NewTask onButtonClick={handleDisplayComponent}/>;
       case "CreateProject":
         return <ProjectForm />;
@@ -54,10 +49,6 @@ const Home = () => {
         return <KanbanBoard />;
       case "AssignProject":
         return <AssignProject />;
-      default:
-        return <KanbanBoard />;
-=======
-        return <NewTask />;
       case "AllTasks":
         return allTasks && allTasks.length > 0 ? (
           <KanbanBoard data={allTasks} />
@@ -65,7 +56,6 @@ const Home = () => {
       default:
         // return <KanbanBoard data={allTasks} />;
         return null;
->>>>>>> feature_KanbanAkhil
     }
   };
 

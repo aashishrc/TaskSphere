@@ -30,7 +30,7 @@ const AssignProject = () => {
                 },
             });
 
-            if (response.status === 200 && response.data.id > 0) {
+            if (response.status === 200) {
                 window.location.reload();
             }
 
@@ -42,7 +42,7 @@ const AssignProject = () => {
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/projects`, {
+                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/projects?page=0&size=100`, {
                     headers: {
                         'Authorization': `Bearer ${jwtToken}`,
                     },

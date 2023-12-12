@@ -8,7 +8,7 @@ const jwtToken = localStorage.getItem("jwtToken");
 const LeftNavigation = ({ onButtonClick }) => {
   const userRole = localStorage.getItem('user_role');
   const userName = localStorage.getItem('user_name');
-  const isUserAdminOrManager = userRole === 'Admin' || 'Manager';
+  const isUserAdminOrManager = userRole === 'Admin' || userRole ===  'Manager';
   const [userProfile, setUserProfile] = useState({});
 
   useEffect(() => {
@@ -40,15 +40,17 @@ const LeftNavigation = ({ onButtonClick }) => {
       </Container>
       <hr />
       <TaskList
-        selectedRowId={selectedRowId}
         onRowClick={() => onButtonClick("Project")}
       />
       <hr />
       <Button onClick={() => onButtonClick("AllTasks")}>View All tasks</Button>
       <hr />
-      <Button onClick={() => onButtonClick("CreateTask")}>
+      {
+        isUserAdminOrManager &&
+        <Button onClick={() => onButtonClick("CreateTask")}>
         Create New Task
       </Button>
+      }
       <hr />
       {isUserAdminOrManager &&
         <Button onClick={() => onButtonClick("CreateProject")}>Create New Project</Button>}
