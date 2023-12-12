@@ -2,6 +2,7 @@ import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { Avatar, Image } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   border-radius: 10px;
@@ -30,23 +31,30 @@ function bgcolorChange(props) {
   return props.isDragging
     ? "lightgreen"
     : props.isDone
-    ? "#F2D7D5"
-    : props.isDraggable
-    ? "#DCDCDC"
-    : "#EAF4FC";
+      ? "#F2D7D5"
+      : props.isDraggable
+        ? "#DCDCDC"
+        : "#EAF4FC";
 }
 
 
 export default function Task({ task, index }) {
+  const navigate = useNavigate();
+
+  const handleTaskClick = () => {
+    navigate(`/assignTask/${task.id}`);
+  };
+
   return (
     <Draggable draggableId={`${task.id}`} key={task.id} index={index}>
       {(provided, snapshot) => (
         <Container
-  {...provided.draggableProps}
-  {...provided.dragHandleProps}
-  ref={provided.innerRef}
-  isDragging={snapshot.isDragging} // Update property name
->
+          onClick={handleTaskClick}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+          isDragging={snapshot.isDragging} // Update property name
+        >
 
           <div style={{ display: "flex", justifyContent: "start", padding: 2 }}>
             <span>
@@ -70,8 +78,8 @@ export default function Task({ task, index }) {
             </div>
           </Icons>
           {provided.placeholder ? (
-  <div ref={provided.placeholder} style={{ visibility: 'hidden' }} />
-) : null}
+            <div ref={provided.placeholder} style={{ visibility: 'hidden' }} />
+          ) : null}
 
         </Container>
       )}
