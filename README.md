@@ -213,30 +213,6 @@ public ResponseEntity<List<ProjectDTO>> importProject(File file) {
 git clone https://github.com/CSYE6200-Object-Oriented-DesignFall2023/final-project-final-group-19.git
 ```
 
-**2. Install PostgreSQL**
-
-Download the installer from official [website](https://www.postgresql.org/).
-
-or
-
-Use homebrew to install (MacOS only):
-
-`brew install postgresql`
-
-`brew services start postgresql`
-
-
-**3. Install pgAdmin 4 for database visualization (optional)**
-
-Download the installer from official [website](https://www.pgadmin.org/download/)
-
-or
-
-Use homebrew to install (MacOS only):
-
-`brew install --cask pgadmin4`
-
-
 **2. Create postgres database**
 
 ```bash
@@ -244,18 +220,12 @@ create database 'TaskSphere'
 ```
 - run `src/main/resources/tasksphere.sql`
 
-**4. Change database username and password as per your installation**
-
-+ open `src/main/resources/application.yml`
-+ change `spring.datasource.username` and `spring.datasource.password` as per your installation
-+ default username: `admin` and password:`admin@123`
-
-**5. Run the app using maven**
+**3. Run the app using maven**
 
 ```bash
 cd backend
 
-mvn clear install
+mvn clean install
 
 mvn spring-boot:run
 ```
