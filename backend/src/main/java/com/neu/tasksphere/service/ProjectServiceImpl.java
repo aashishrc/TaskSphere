@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -144,10 +145,16 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ResponseEntity<List<ProjectDTO>> importProject(File file) {
+    public ResponseEntity<List<ProjectDTO>> importProject(MultipartFile multipartFile) {
+//        File file = new File(multipartFile.getOriginalFilename());
+//        try {
+//            multipartFile.transferTo(file);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         ProjectFactory projectFactory = ProjectFactory.getInstance();
         List<ProjectDTO> list = new ArrayList<>();
-        try (FileReader fr = new FileReader(file); BufferedReader br = new BufferedReader(fr)) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(multipartFile.getInputStream()))) {
             String inputLine = null;
             while ((inputLine = br.readLine()) != null) {
                 String[] fields = inputLine.split(",");

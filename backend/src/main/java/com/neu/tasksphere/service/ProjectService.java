@@ -23,5 +23,5 @@ public interface ProjectService {
 
     ResponseEntity<List<ProjectDTO>> exportProject();
 
-    ResponseEntity<List<ProjectDTO>> importProject(File file);
+    ResponseEntity<List<ProjectDTO>> importProject(MultipartFile multipartFile);
 }
